@@ -15,7 +15,8 @@ public class HonsProject {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        //This is a test
+        GUI gui = new GUI();
+        gui.setVisible(true);
     }
     
 }
