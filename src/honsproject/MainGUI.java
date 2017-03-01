@@ -5,18 +5,23 @@
  */
 package honsproject;
 
-import javax.swing.JOptionPane;
+import java.awt.event.*;
+import java.awt.*;
+import javax.swing.*;
+
+
 
 /**
  *
  * @author 1305997
+ * @version Feb 2017
  */
-public class GUI extends javax.swing.JFrame {
+public class MainGUI extends javax.swing.JFrame {
 
     /**
      * Creates new form GUI
      */
-    public GUI() {
+    public MainGUI() {
         initComponents();
     }
 
@@ -52,6 +57,11 @@ public class GUI extends javax.swing.JFrame {
         menuView.setText("View");
 
         menuViewListParticipants.setText("View List of Experiment Participants");
+        menuViewListParticipants.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuViewListParticipantsActionPerformed(evt);
+            }
+        });
         menuView.add(menuViewListParticipants);
 
         menuBar.add(menuView);
@@ -78,6 +88,14 @@ public class GUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_menuFileExitActionPerformed
 
+    private void menuViewListParticipantsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuViewListParticipantsActionPerformed
+
+        ParticipantPasswordGUI passwordCheck = new ParticipantPasswordGUI();
+        passwordCheck.setVisible(true);
+        this.setVisible(false);
+  
+    }//GEN-LAST:event_menuViewListParticipantsActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -95,20 +113,23 @@ public class GUI extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MainGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MainGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MainGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MainGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new GUI().setVisible(true);
+                new MainGUI().setVisible(true);
             }
         });
     }

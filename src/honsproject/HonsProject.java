@@ -8,15 +8,20 @@ package honsproject;
 /**
  *
  * @author 1305997
+ * @version Feb 2017
  */
 public class HonsProject {
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
-        GUI gui = new GUI();
-        gui.setVisible(true);
+    public static void main(String[] args){
+        
+        //Creating and spawning GUI objects
+        MainGUI mainGUI = new MainGUI();
+        mainGUI.pack();
+        mainGUI.setLocationRelativeTo(null);
+        mainGUI.setVisible(true);
     }
     
 }

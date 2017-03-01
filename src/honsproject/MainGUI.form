@@ -28,6 +28,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="View List of Experiment Participants"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuViewListParticipantsActionPerformed"/>
+              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>
