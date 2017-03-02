@@ -6,9 +6,7 @@
 package honsproject;
 
 import java.awt.HeadlessException;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -20,7 +18,8 @@ public class ParticipantPasswordGUI extends javax.swing.JFrame {
      * Creates new form ParticipantPasswordGUI
      */
     
-    private final String password = "password";
+    ParticipantPassword participantGUIPassword = new ParticipantPassword();
+    private final String password = participantGUIPassword.getPassword();
     public boolean allowAccess = false;
 
     public ParticipantPasswordGUI() {
@@ -38,21 +37,15 @@ public class ParticipantPasswordGUI extends javax.swing.JFrame {
 
         passwordCheckTitle = new javax.swing.JLabel();
         passwordCheckLabel = new javax.swing.JLabel();
-        passwordInputField = new javax.swing.JTextField();
         passwordCheckEnterBtn = new javax.swing.JButton();
         passwordCheckBackBtn = new javax.swing.JButton();
+        jPasswordField1 = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         passwordCheckTitle.setText("Participant details are Password Protected!");
 
         passwordCheckLabel.setText("Enter Password:");
-
-        passwordInputField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                passwordInputFieldActionPerformed(evt);
-            }
-        });
 
         passwordCheckEnterBtn.setText("Enter");
         passwordCheckEnterBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -62,6 +55,11 @@ public class ParticipantPasswordGUI extends javax.swing.JFrame {
         });
 
         passwordCheckBackBtn.setText("Back");
+        passwordCheckBackBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                passwordCheckBackBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -76,8 +74,8 @@ public class ParticipantPasswordGUI extends javax.swing.JFrame {
                         .addComponent(passwordCheckEnterBtn)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(passwordCheckBackBtn))
-                    .addComponent(passwordInputField, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(37, 37, 37))
+                    .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(20, 20, 20))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(passwordCheckTitle)
@@ -91,12 +89,12 @@ public class ParticipantPasswordGUI extends javax.swing.JFrame {
                 .addGap(43, 43, 43)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(passwordCheckLabel)
-                    .addComponent(passwordInputField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(passwordCheckEnterBtn)
                     .addComponent(passwordCheckBackBtn))
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -104,7 +102,7 @@ public class ParticipantPasswordGUI extends javax.swing.JFrame {
 
     private void passwordCheckEnterBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordCheckEnterBtnActionPerformed
         
-        String passwordInput = this.passwordInputField.getText();
+        String passwordInput = jPasswordField1.getText();
         
         if(passwordInput.equals(this.password)){
             this.allowAccess = true;
@@ -121,11 +119,17 @@ public class ParticipantPasswordGUI extends javax.swing.JFrame {
             particpantGUI.setLocationRelativeTo(this);
             particpantGUI.setVisible(true);
         }
+        else{
+            JOptionPane.showMessageDialog(null,"Access Denied.", "Incorrect Password.", JOptionPane.INFORMATION_MESSAGE);
+        }
     }//GEN-LAST:event_passwordCheckEnterBtnActionPerformed
 
-    private void passwordInputFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordInputFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_passwordInputFieldActionPerformed
+    private void passwordCheckBackBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordCheckBackBtnActionPerformed
+        MainGUI home = new MainGUI();
+        this.setVisible(false);
+        home.setVisible(true);
+        home.setLocationRelativeTo(this);
+    }//GEN-LAST:event_passwordCheckBackBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -161,12 +165,12 @@ public class ParticipantPasswordGUI extends javax.swing.JFrame {
             }
         });
     }
-
+    private javax.swing.JPasswordField passwordField;
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JButton passwordCheckBackBtn;
     private javax.swing.JButton passwordCheckEnterBtn;
     private javax.swing.JLabel passwordCheckLabel;
     private javax.swing.JLabel passwordCheckTitle;
-    private javax.swing.JTextField passwordInputField;
     // End of variables declaration//GEN-END:variables
 }

@@ -92,6 +92,7 @@ public class MainGUI extends javax.swing.JFrame {
 
         ParticipantPasswordGUI passwordCheck = new ParticipantPasswordGUI();
         passwordCheck.setVisible(true);
+        passwordCheck.setLocationRelativeTo(this);
         this.setVisible(false);
   
     }//GEN-LAST:event_menuViewListParticipantsActionPerformed
