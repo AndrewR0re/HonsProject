@@ -9,11 +9,19 @@ package honsproject;
  *
  * @author 1305997
  */
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 public class ParticipantGUI extends javax.swing.JFrame {
 
     /**
      * Creates new form ParticipantGUI
      */
+    
     public ParticipantGUI() {
         initComponents();
     }
@@ -27,13 +35,20 @@ public class ParticipantGUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
         participantBackBtn = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
+        jLabelInfo = new javax.swing.JLabel();
+        jLabelID = new javax.swing.JLabel();
+        jLabelName = new javax.swing.JLabel();
+        jLabelEmail = new javax.swing.JLabel();
+        jLabelPhone = new javax.swing.JLabel();
+        participant1ID = new javax.swing.JTextField();
+        participant1Name = new javax.swing.JTextField();
+        participant1Email = new javax.swing.JTextField();
+        participant1Phone = new javax.swing.JTextField();
+        btnLoadDatabase = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jLabel1.setText("Participants be here!");
+        setBounds(new java.awt.Rectangle(100, 0, 0, 0));
 
         participantBackBtn.setText("Back");
         participantBackBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -42,38 +57,81 @@ public class ParticipantGUI extends javax.swing.JFrame {
             }
         });
 
-        jLabel2.setText("List of Participants assisting in experiments");
+        jLabelInfo.setText("List of Participants assisting in experiments");
+
+        jLabelID.setText("ID");
+
+        jLabelName.setText("Name");
+
+        jLabelEmail.setText("Email");
+
+        jLabelPhone.setText("Phone");
+
+        btnLoadDatabase.setText("Load Details From Database");
+        btnLoadDatabase.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLoadDatabaseActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnLoadDatabase)
+                        .addGap(20, 20, 20)
                         .addComponent(participantBackBtn))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(152, 152, 152)
-                                .addComponent(jLabel1))
-                            .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jLabel2)))
-                        .addGap(0, 138, Short.MAX_VALUE)))
-                .addContainerGap())
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabelID)
+                                        .addGap(67, 67, 67)
+                                        .addComponent(jLabelName))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(participant1ID, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(20, 20, 20)
+                                        .addComponent(participant1Name, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(20, 20, 20)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(participant1Email, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabelEmail))
+                                .addGap(20, 20, 20)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabelPhone)
+                                    .addComponent(participant1Phone, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jLabelInfo))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel2)
-                .addGap(86, 86, 86)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 141, Short.MAX_VALUE)
-                .addComponent(participantBackBtn)
-                .addContainerGap())
+                .addGap(20, 20, 20)
+                .addComponent(jLabelInfo)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelID)
+                    .addComponent(jLabelName)
+                    .addComponent(jLabelEmail)
+                    .addComponent(jLabelPhone))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(participant1ID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(participant1Name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(participant1Email, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(participant1Phone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(participantBackBtn)
+                    .addComponent(btnLoadDatabase))
+                .addGap(20, 20, 20))
         );
 
         pack();
@@ -86,6 +144,39 @@ public class ParticipantGUI extends javax.swing.JFrame {
         mainGUI.setVisible(true);
         
     }//GEN-LAST:event_participantBackBtnActionPerformed
+
+    private void btnLoadDatabaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoadDatabaseActionPerformed
+         try{
+            String host = "jdbc:derby://localhost:1527/HonsProjectDatabase";
+            String username = "andrew";
+            String password = "Palladium1";
+
+
+            Connection con = DriverManager.getConnection(host,username,password);
+            
+            Statement stmt = con.createStatement();
+            String sql = "SELECT * FROM PARTICIPANTDETAILS";
+            ResultSet rs = stmt.executeQuery(sql);
+            
+            rs.next();
+            int id_col = rs.getInt("ID");
+            String first_name = rs.getString("First_Name");
+            String last_name = rs.getString("Last_Name");
+            String full_name = first_name + " " + last_name;
+            String phone = rs.getString("Phone");
+            String email = rs.getString("Email");
+            
+            participant1ID.setText(Integer.toString(id_col));
+            participant1Name.setText(full_name);
+            participant1Phone.setText(phone);
+            participant1Email.setText(email);
+            
+        }
+        
+        catch(SQLException err){
+            System.out.println(err.getMessage());
+        }
+    }//GEN-LAST:event_btnLoadDatabaseActionPerformed
 
     /**
      * @param args the command line arguments
@@ -123,8 +214,16 @@ public class ParticipantGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JButton btnLoadDatabase;
+    private javax.swing.JLabel jLabelEmail;
+    private javax.swing.JLabel jLabelID;
+    private javax.swing.JLabel jLabelInfo;
+    private javax.swing.JLabel jLabelName;
+    private javax.swing.JLabel jLabelPhone;
+    private javax.swing.JTextField participant1Email;
+    private javax.swing.JTextField participant1ID;
+    private javax.swing.JTextField participant1Name;
+    private javax.swing.JTextField participant1Phone;
     private javax.swing.JButton participantBackBtn;
     // End of variables declaration//GEN-END:variables
 }
