@@ -40,12 +40,11 @@ public class ParticipantGUI extends javax.swing.JFrame {
         jLabelID = new javax.swing.JLabel();
         jLabelName = new javax.swing.JLabel();
         jLabelEmail = new javax.swing.JLabel();
-        jLabelPhone = new javax.swing.JLabel();
         participant1ID = new javax.swing.JTextField();
         participant1Name = new javax.swing.JTextField();
         participant1Email = new javax.swing.JTextField();
-        participant1Phone = new javax.swing.JTextField();
         btnLoadDatabase = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBounds(new java.awt.Rectangle(100, 0, 0, 0));
@@ -65,14 +64,14 @@ public class ParticipantGUI extends javax.swing.JFrame {
 
         jLabelEmail.setText("Email");
 
-        jLabelPhone.setText("Phone");
-
         btnLoadDatabase.setText("Load Details From Database");
         btnLoadDatabase.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLoadDatabaseActionPerformed(evt);
             }
         });
+
+        jButton1.setText("View Data");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -82,52 +81,45 @@ public class ParticipantGUI extends javax.swing.JFrame {
                 .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnLoadDatabase)
-                        .addGap(20, 20, 20)
-                        .addComponent(participantBackBtn))
+                        .addComponent(jLabelID)
+                        .addGap(67, 67, 67)
+                        .addComponent(jLabelName))
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(participant1ID, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20)
+                        .addComponent(participant1Name, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabelInfo)
+                    .addComponent(btnLoadDatabase))
+                .addGap(20, 20, 20)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(participant1Email, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabelID)
-                                        .addGap(67, 67, 67)
-                                        .addComponent(jLabelName))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(participant1ID, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(20, 20, 20)
-                                        .addComponent(participant1Name, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(20, 20, 20)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(participant1Email, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabelEmail))
-                                .addGap(20, 20, 20)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabelPhone)
-                                    .addComponent(participant1Phone, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(jLabelInfo))
+                            .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(participantBackBtn, javax.swing.GroupLayout.Alignment.TRAILING)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabelEmail)
                         .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(20, 20, 20))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addComponent(jLabelInfo)
-                .addGap(18, 18, 18)
+                .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelID)
                     .addComponent(jLabelName)
-                    .addComponent(jLabelEmail)
-                    .addComponent(jLabelPhone))
+                    .addComponent(jLabelEmail))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(participant1ID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(participant1Name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(participant1Email, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(participant1Phone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(participantBackBtn)
                     .addComponent(btnLoadDatabase))
@@ -146,12 +138,22 @@ public class ParticipantGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_participantBackBtnActionPerformed
 
     private void btnLoadDatabaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoadDatabaseActionPerformed
-         try{
+         
+        
+        
+        try{
+            
+            //Instantiation of String and char[] variables representing host, username and password for Database
             String host = "jdbc:derby://localhost:1527/HonsProjectDatabase";
             String username = "andrew";
-            String password = "Palladium1";
+            char[] passwordArray = new char[]{'P','a','l','l','a','d','i','u','m','1'};
+            String password = "";
+            
+            for(char currentChar: passwordArray){
+                password+=currentChar;
+            }
 
-
+            //Statement initiates connection with Database
             Connection con = DriverManager.getConnection(host,username,password);
             
             Statement stmt = con.createStatement();
@@ -163,12 +165,10 @@ public class ParticipantGUI extends javax.swing.JFrame {
             String first_name = rs.getString("First_Name");
             String last_name = rs.getString("Last_Name");
             String full_name = first_name + " " + last_name;
-            String phone = rs.getString("Phone");
             String email = rs.getString("Email");
             
             participant1ID.setText(Integer.toString(id_col));
             participant1Name.setText(full_name);
-            participant1Phone.setText(phone);
             participant1Email.setText(email);
             
         }
@@ -215,15 +215,14 @@ public class ParticipantGUI extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLoadDatabase;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabelEmail;
     private javax.swing.JLabel jLabelID;
     private javax.swing.JLabel jLabelInfo;
     private javax.swing.JLabel jLabelName;
-    private javax.swing.JLabel jLabelPhone;
     private javax.swing.JTextField participant1Email;
     private javax.swing.JTextField participant1ID;
     private javax.swing.JTextField participant1Name;
-    private javax.swing.JTextField participant1Phone;
     private javax.swing.JButton participantBackBtn;
     // End of variables declaration//GEN-END:variables
 }

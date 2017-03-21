@@ -5,8 +5,8 @@
  */
 package honsproject;
 
-import java.awt.HeadlessException;
 import javax.swing.JOptionPane;
+import java.util.Arrays;
 
 /**
  *
@@ -19,7 +19,7 @@ public class ParticipantPasswordGUI extends javax.swing.JFrame {
      */
     
     ParticipantPassword participantGUIPassword = new ParticipantPassword();
-    private final String password = participantGUIPassword.getPassword();
+    private final char[] password = participantGUIPassword.getPassword();
     public boolean allowAccess = false;
 
     public ParticipantPasswordGUI() {
@@ -66,7 +66,7 @@ public class ParticipantPasswordGUI extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(20, Short.MAX_VALUE)
                 .addComponent(passwordCheckLabel)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -77,24 +77,24 @@ public class ParticipantPasswordGUI extends javax.swing.JFrame {
                     .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(20, 20, 20))
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(20, 20, 20)
                 .addComponent(passwordCheckTitle)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(20, 20, 20)
                 .addComponent(passwordCheckTitle)
-                .addGap(43, 43, 43)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(passwordCheckLabel)
                     .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(passwordCheckEnterBtn)
                     .addComponent(passwordCheckBackBtn))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         pack();
@@ -102,17 +102,12 @@ public class ParticipantPasswordGUI extends javax.swing.JFrame {
 
     private void passwordCheckEnterBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordCheckEnterBtnActionPerformed
         
-        String passwordInput = jPasswordField1.getText();
+        //String passwordInput = jPasswordField1.getText();
+        char[] passwordFieldInput = jPasswordField1.getPassword();
         
-        if(passwordInput.equals(this.password)){
-            this.allowAccess = true;
-        }
+        boolean allowAccess = Arrays.equals(passwordFieldInput,password);
         
-        else{
-            this.allowAccess = false;
-        }
-        
-        if(this.allowAccess){
+        if(allowAccess){
             this.setVisible(false);
             
             ParticipantGUI particpantGUI = new ParticipantGUI();
@@ -120,7 +115,7 @@ public class ParticipantPasswordGUI extends javax.swing.JFrame {
             particpantGUI.setVisible(true);
         }
         else{
-            JOptionPane.showMessageDialog(null,"Access Denied.", "Incorrect Password.", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null,"Incorrect password. Access Denied.", "Incorrect Password.", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_passwordCheckEnterBtnActionPerformed
 

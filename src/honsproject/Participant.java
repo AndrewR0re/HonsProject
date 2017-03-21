@@ -15,13 +15,11 @@ public class Participant {
     private String id;
     private String name;
     private String email;
-    private String phone;
 
     public Participant(String id, String name, String email, String phone) {
         this.id = id;
         this.name = name;
         this.email = email;
-        this.phone = phone;
     }
     
     
@@ -61,18 +59,5 @@ public class Participant {
     //Method returns value of Participant Email field
     public String getEmail(){
         return this.email;
-    }
-    
-    
-    //Methods handling retreival and assignment of Participant Phone field
-    
-    //Method sets value of Participant Phone field
-    public void setPhone(String phone){
-        this.phone = phone;
-    }
-    
-    //Method returns value of Participant Phone field
-    public String getPhone(){
-        return this.phone;
     }
 }

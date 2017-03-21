@@ -11,13 +11,15 @@ package honsproject;
  */
 public class ParticipantPassword {
     
-    private String passwordString = "password";
+    //password objects represented as array of chars as more secure than Strings
+    private char[] pass = new char[]{'p','a','s','s','w','o','r','d'};
 
     public ParticipantPassword() {
     }
     
-    public String getPassword(){
-        return this.passwordString;
+    //method returns an array of chars representing the password for the Participant details screen
+    public char[] getPassword(){
+        return this.pass;
     }
     
     

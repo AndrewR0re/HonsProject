@@ -34,68 +34,78 @@ public class MainGUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        menuBar = new javax.swing.JMenuBar();
-        menuFile = new javax.swing.JMenu();
-        menuFileExit = new javax.swing.JMenuItem();
-        menuView = new javax.swing.JMenu();
-        menuViewListParticipants = new javax.swing.JMenuItem();
+        btnViewParticipantDetails = new javax.swing.JButton();
+        btnExit = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        menuFile.setText("File");
-
-        menuFileExit.setText("Exit");
-        menuFileExit.addActionListener(new java.awt.event.ActionListener() {
+        btnViewParticipantDetails.setText("View List of Participants");
+        btnViewParticipantDetails.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuFileExitActionPerformed(evt);
+                btnViewParticipantDetailsActionPerformed(evt);
             }
         });
-        menuFile.add(menuFileExit);
 
-        menuBar.add(menuFile);
-
-        menuView.setText("View");
-
-        menuViewListParticipants.setText("View List of Experiment Participants");
-        menuViewListParticipants.addActionListener(new java.awt.event.ActionListener() {
+        btnExit.setText("Exit");
+        btnExit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuViewListParticipantsActionPerformed(evt);
+                btnExitActionPerformed(evt);
             }
         });
-        menuView.add(menuViewListParticipants);
 
-        menuBar.add(menuView);
-
-        setJMenuBar(menuBar);
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jTextArea1.setText("This application shall serve as a log of\nany experimentation carried out as part\nof the honours project. ");
+        jScrollPane1.setViewportView(jTextArea1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(23, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane1)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnViewParticipantDetails)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 171, Short.MAX_VALUE)
+                        .addComponent(btnExit)))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 279, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(20, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnViewParticipantDetails)
+                    .addComponent(btnExit))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void menuFileExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuFileExitActionPerformed
-        if (JOptionPane.showConfirmDialog(null, "Are you sure you want to quit?") == JOptionPane.YES_NO_OPTION){
-            System.exit(0);
-        }
-    }//GEN-LAST:event_menuFileExitActionPerformed
-
-    private void menuViewListParticipantsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuViewListParticipantsActionPerformed
-
+    private void btnViewParticipantDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewParticipantDetailsActionPerformed
+        
         ParticipantPasswordGUI passwordCheck = new ParticipantPasswordGUI();
         passwordCheck.setVisible(true);
         passwordCheck.setLocationRelativeTo(this);
         this.setVisible(false);
-  
-    }//GEN-LAST:event_menuViewListParticipantsActionPerformed
+    }//GEN-LAST:event_btnViewParticipantDetailsActionPerformed
+
+    private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
+        
+       int result = JOptionPane.showConfirmDialog(null,"Are you sure you want to exit?","Exit?", JOptionPane.OK_CANCEL_OPTION);
+
+       if (result==0){
+           System.exit(0);
+       }
+       
+    }//GEN-LAST:event_btnExitActionPerformed
 
     /**
      * @param args the command line arguments
@@ -136,10 +146,9 @@ public class MainGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuBar menuBar;
-    private javax.swing.JMenu menuFile;
-    private javax.swing.JMenuItem menuFileExit;
-    private javax.swing.JMenu menuView;
-    private javax.swing.JMenuItem menuViewListParticipants;
+    private javax.swing.JButton btnExit;
+    private javax.swing.JButton btnViewParticipantDetails;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextArea jTextArea1;
     // End of variables declaration//GEN-END:variables
 }
