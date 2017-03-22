@@ -1,6 +1,23 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
+  <NonVisualComponents>
+    <Container class="javax.swing.JScrollPane" name="jScrollPane1">
+      <AuxValues>
+        <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+      </AuxValues>
+
+      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+      <SubComponents>
+        <Component class="javax.swing.JTextArea" name="jTextArea1">
+          <Properties>
+            <Property name="columns" type="int" value="20"/>
+            <Property name="rows" type="int" value="5"/>
+          </Properties>
+        </Component>
+      </SubComponents>
+    </Container>
+  </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
     <Property name="bounds" type="java.awt.Rectangle" editor="org.netbeans.beaninfo.editors.RectangleEditor">
@@ -26,35 +43,45 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Group type="102" attributes="0">
+                      <Component id="participant2IDField" min="-2" pref="50" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+                      <Component id="participant2NameField" max="32767" attributes="0"/>
+                  </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jLabelID" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="67" max="-2" attributes="0"/>
                       <Component id="jLabelName" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="participant1ID" min="-2" pref="50" max="-2" attributes="0"/>
+                      <Component id="participant1IDField" min="-2" pref="50" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
-                      <Component id="participant1Name" min="-2" pref="150" max="-2" attributes="0"/>
+                      <Component id="participant1NameField" min="-2" pref="150" max="-2" attributes="0"/>
                   </Group>
                   <Component id="jLabelInfo" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="btnLoadDatabase" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+              <EmptySpace min="20" pref="20" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="participant1Email" min="-2" pref="200" max="-2" attributes="0"/>
-                      <EmptySpace pref="20" max="32767" attributes="0"/>
+                      <Component id="participant1EmailField" min="-2" pref="200" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jButton1" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnViewP1Data" alignment="1" min="-2" max="-2" attributes="0"/>
                           <Component id="participantBackBtn" alignment="1" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <Group type="102" attributes="0">
                       <Component id="jLabelEmail" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="participant2EmailField" min="-2" pref="202" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="btnViewP2Data" max="32767" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
@@ -74,12 +101,19 @@
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="participant1ID" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="participant1Name" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="participant1Email" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="participant1IDField" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="participant1NameField" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="participant1EmailField" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnViewP1Data" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="18" max="32767" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="participant2IDField" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="participant2NameField" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="participant2EmailField" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnViewP2Data" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace pref="17" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="participantBackBtn" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnLoadDatabase" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -118,11 +152,11 @@
         <Property name="text" type="java.lang.String" value="Email"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="participant1ID">
+    <Component class="javax.swing.JTextField" name="participant1IDField">
     </Component>
-    <Component class="javax.swing.JTextField" name="participant1Name">
+    <Component class="javax.swing.JTextField" name="participant1NameField">
     </Component>
-    <Component class="javax.swing.JTextField" name="participant1Email">
+    <Component class="javax.swing.JTextField" name="participant1EmailField">
     </Component>
     <Component class="javax.swing.JButton" name="btnLoadDatabase">
       <Properties>
@@ -132,7 +166,18 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLoadDatabaseActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton1">
+    <Component class="javax.swing.JButton" name="btnViewP1Data">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="View Data"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="participant2IDField">
+    </Component>
+    <Component class="javax.swing.JTextField" name="participant2NameField">
+    </Component>
+    <Component class="javax.swing.JTextField" name="participant2EmailField">
+    </Component>
+    <Component class="javax.swing.JButton" name="btnViewP2Data">
       <Properties>
         <Property name="text" type="java.lang.String" value="View Data"/>
       </Properties>
