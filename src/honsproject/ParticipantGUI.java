@@ -10,12 +10,16 @@ package honsproject;
  * @author 1305997
  */
 
+import java.awt.GridLayout;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 public class ParticipantGUI extends javax.swing.JFrame {
@@ -59,6 +63,19 @@ public class ParticipantGUI extends javax.swing.JFrame {
         participant2NameField = new javax.swing.JTextField();
         participant2EmailField = new javax.swing.JTextField();
         btnViewP2Data = new javax.swing.JButton();
+        participant3IDField = new javax.swing.JTextField();
+        participant3NameField = new javax.swing.JTextField();
+        participant3EmailField = new javax.swing.JTextField();
+        participant4IDField = new javax.swing.JTextField();
+        participant4NameField = new javax.swing.JTextField();
+        participant4EmailField = new javax.swing.JTextField();
+        participant5IDField = new javax.swing.JTextField();
+        participant5NameField = new javax.swing.JTextField();
+        participant5EmailField = new javax.swing.JTextField();
+        participant6IDField = new javax.swing.JTextField();
+        participant6NameField = new javax.swing.JTextField();
+        participant6EmailField = new javax.swing.JTextField();
+        btnAddParticipant = new javax.swing.JButton();
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
@@ -93,6 +110,19 @@ public class ParticipantGUI extends javax.swing.JFrame {
 
         btnViewP2Data.setText("View Data");
 
+        participant5EmailField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                participant5EmailFieldActionPerformed(evt);
+            }
+        });
+
+        btnAddParticipant.setText("Add Participant");
+        btnAddParticipant.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddParticipantActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -101,35 +131,61 @@ public class ParticipantGUI extends javax.swing.JFrame {
                 .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(participant2IDField, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(20, 20, 20)
-                        .addComponent(participant2NameField))
+                        .addComponent(participant6IDField, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(participant6NameField))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabelID)
                         .addGap(67, 67, 67)
                         .addComponent(jLabelName))
+                    .addComponent(jLabelInfo)
+                    .addComponent(btnLoadDatabase)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(participant5IDField, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(participant5NameField))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(participant4IDField, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(participant4NameField))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(participant3IDField, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(participant3NameField))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(participant2IDField, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20)
+                        .addComponent(participant2NameField))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(participant1IDField, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(20, 20, 20)
-                        .addComponent(participant1NameField, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabelInfo)
-                    .addComponent(btnLoadDatabase))
-                .addGap(20, 20, 20)
+                        .addComponent(participant1NameField, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(participant1EmailField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(22, 22, 22)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnViewP1Data, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(participantBackBtn, javax.swing.GroupLayout.Alignment.TRAILING)))
+                            .addComponent(jLabelEmail)
+                            .addComponent(participant4EmailField, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(participant5EmailField, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(participant6EmailField, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(participant3EmailField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 202, Short.MAX_VALUE)
+                                    .addComponent(participant1EmailField, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(participant2EmailField, javax.swing.GroupLayout.Alignment.LEADING))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(18, 18, 18)
+                                        .addComponent(btnViewP2Data))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(16, 16, 16)
+                                        .addComponent(btnViewP1Data))))))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabelEmail)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(participant2EmailField, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(119, 119, 119)
+                        .addComponent(btnAddParticipant)
                         .addGap(18, 18, 18)
-                        .addComponent(btnViewP2Data, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGap(20, 20, 20))
+                        .addComponent(participantBackBtn)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -147,16 +203,37 @@ public class ParticipantGUI extends javax.swing.JFrame {
                     .addComponent(participant1NameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(participant1EmailField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnViewP1Data))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(5, 5, 5)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(participant2IDField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(participant2NameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(participant2EmailField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnViewP2Data))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
+                .addGap(5, 5, 5)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(participant3IDField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(participant3NameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(participant3EmailField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(5, 5, 5)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(participant4IDField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(participant4NameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(participant4EmailField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(5, 5, 5)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(participant5IDField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(participant5NameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(participant5EmailField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(5, 5, 5)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(participant6IDField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(participant6NameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(participant6EmailField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(participantBackBtn)
-                    .addComponent(btnLoadDatabase))
+                    .addComponent(btnLoadDatabase)
+                    .addComponent(btnAddParticipant))
                 .addGap(20, 20, 20))
         );
 
@@ -193,21 +270,42 @@ public class ParticipantGUI extends javax.swing.JFrame {
             ResultSet rs = stmt.executeQuery(sql);
             
             rs.next();
-            int id_col = rs.getInt("ID");
-            String first_name = rs.getString("First_Name");
-            String last_name = rs.getString("Last_Name");
-            String full_name = first_name + " " + last_name;
-            String email = rs.getString("Email");
+            int p1_ID = rs.getInt("ID");
+            String p1_first_name = rs.getString("First_Name");
+            String p1_last_name = rs.getString("Last_Name");
+            String p1_full_name = p1_first_name + " " + p1_last_name;
+            String p1_email = rs.getString("Email");
+
             
-            participant1IDField.setText(Integer.toString(id_col));
-            participant1NameField.setText(full_name);
-            participant1EmailField.setText(email);
+            //Statments append details of first Participant in database to first row of text fields
             
+            participant1IDField.setText(Integer.toString(p1_ID));
+            participant1NameField.setText(p1_full_name);
+            participant1EmailField.setText(p1_email);
+            
+            if (rs.next()){
+                int p2_ID = rs.getInt("ID");
+                String p2_first_name = rs.getString("First_Name");
+                String p2_last_name = rs.getString("Last_Name");
+                String p2_full_name = p2_first_name + " " + p2_last_name;
+                String p2_email = rs.getString("Email");
+                
+            //Statments append details of second Participant in database to first row of text fields
+            
+            participant2IDField.setText(Integer.toString(p2_ID));
+            participant2NameField.setText(p2_full_name);
+            participant2EmailField.setText(p2_email);
+                
+            }
+            else{
+                rs.previous();
+            }
         }
         
         catch(SQLException err){
             System.out.println(err.getMessage());
         }
+        
         
         //Following statements create Participant objects from Participant details database
         
@@ -215,7 +313,7 @@ public class ParticipantGUI extends javax.swing.JFrame {
         
         for(int i=0; i<numOfParticipants ; i++){
             
-            participantIDArray[i] = i;
+            participantIDArray[i] = i+1;
         }
         
         idList.add(this.participant1IDField);
@@ -227,11 +325,92 @@ public class ParticipantGUI extends javax.swing.JFrame {
         emailList.add(this.participant1EmailField);
         emailList.add(this.participant2EmailField);
         
-        for(int i=0 ; i<numOfParticipants ; i++){
-            
-            //Participant part = new Participant(idList[i],nameList[i],emailList[i]);
-        }
+        
     }//GEN-LAST:event_btnLoadDatabaseActionPerformed
+
+    private void participant5EmailFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_participant5EmailFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_participant5EmailFieldActionPerformed
+
+    private void btnAddParticipantActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddParticipantActionPerformed
+        
+        JPanel panel = new JPanel(new GridLayout(0, 1, 5, 5));
+        
+        JLabel firstNameLabel = new JLabel("First name: ");
+        JTextField newParticipantFNameField = new JTextField(10);
+        
+        panel.add(firstNameLabel);
+        panel.add(newParticipantFNameField);
+        
+        JLabel secondNameLabel = new JLabel("Second name: ");
+        JTextField newParticipantSNameField = new JTextField(10);
+        
+        panel.add(secondNameLabel);
+        panel.add(newParticipantSNameField);
+        
+        JLabel emailLabel = new JLabel("Email address: ");
+        JTextField newParticipantEmailField = new JTextField(10);
+        
+        panel.add(emailLabel);
+        panel.add(newParticipantEmailField);
+        
+        int value = JOptionPane.showConfirmDialog(null, panel, "Enter new Participant details", JOptionPane.OK_CANCEL_OPTION,JOptionPane.PLAIN_MESSAGE);
+        
+        if (value == JOptionPane.OK_OPTION){
+            
+            String newParticipantFirstName = newParticipantFNameField.getText();
+            String newParticipantSecondName = newParticipantSNameField.getText();
+            String newParticipantName = newParticipantFNameField.getText() + newParticipantSNameField.getText();
+            String newParticipantEmail = newParticipantEmailField.getText();
+            
+        }
+        
+        try{
+            
+            //Instantiation of String and char[] variables representing host, username and password for Database
+            String host = "jdbc:derby://localhost:1527/HonsProjectDatabase";
+            String username = "andrew";
+            char[] passwordArray = new char[]{'P','a','l','l','a','d','i','u','m','1'};
+            String password = "";
+            
+            for(char currentChar: passwordArray){
+                password+=currentChar;
+            }
+
+            //Statement initiates connection with Database
+            Connection con = DriverManager.getConnection(host,username,password);
+            
+            
+            Statement stmt = con.createStatement();
+            
+           
+           int c = stmt.executeUpdate("INSERT INTO PARTICIPANTDETAILS" + " (ID, FIRST_NAME, LAST_NAME, EMAIL) " + "VALUES (1,newParticipantFirstName,newParticipantSecondName,newParticipantEmail)");
+           
+           stmt.close();
+           con.close();
+            
+            
+            
+            /*
+            int p1_ID = rs.getInt("ID");
+            String p1_first_name = rs.getString("First_Name");
+            String p1_last_name = rs.getString("Last_Name");
+            String p1_full_name = p1_first_name + " " + p1_last_name;
+            String p1_email = rs.getString("Email");
+            */
+            
+            
+            
+            
+            
+        }
+        
+        catch(SQLException err){
+            System.out.println(err.getMessage());
+        }
+        
+        
+    }//GEN-LAST:event_btnAddParticipantActionPerformed
 
     /**
      * @param args the command line arguments
@@ -269,6 +448,7 @@ public class ParticipantGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAddParticipant;
     private javax.swing.JButton btnLoadDatabase;
     private javax.swing.JButton btnViewP1Data;
     private javax.swing.JButton btnViewP2Data;
@@ -284,6 +464,18 @@ public class ParticipantGUI extends javax.swing.JFrame {
     private javax.swing.JTextField participant2EmailField;
     private javax.swing.JTextField participant2IDField;
     private javax.swing.JTextField participant2NameField;
+    private javax.swing.JTextField participant3EmailField;
+    private javax.swing.JTextField participant3IDField;
+    private javax.swing.JTextField participant3NameField;
+    private javax.swing.JTextField participant4EmailField;
+    private javax.swing.JTextField participant4IDField;
+    private javax.swing.JTextField participant4NameField;
+    private javax.swing.JTextField participant5EmailField;
+    private javax.swing.JTextField participant5IDField;
+    private javax.swing.JTextField participant5NameField;
+    private javax.swing.JTextField participant6EmailField;
+    private javax.swing.JTextField participant6IDField;
+    private javax.swing.JTextField participant6NameField;
     private javax.swing.JButton participantBackBtn;
     // End of variables declaration//GEN-END:variables
 }

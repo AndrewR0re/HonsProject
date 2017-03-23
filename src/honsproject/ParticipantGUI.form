@@ -47,44 +47,78 @@
               <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Group type="102" attributes="0">
-                      <Component id="participant2IDField" min="-2" pref="50" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
-                      <Component id="participant2NameField" max="32767" attributes="0"/>
+                      <Component id="participant6IDField" min="-2" pref="50" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="participant6NameField" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jLabelID" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="67" max="-2" attributes="0"/>
                       <Component id="jLabelName" min="-2" max="-2" attributes="0"/>
                   </Group>
+                  <Component id="jLabelInfo" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnLoadDatabase" min="-2" max="-2" attributes="0"/>
+                  <Group type="102" alignment="1" attributes="0">
+                      <Component id="participant5IDField" min="-2" pref="50" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="participant5NameField" max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="1" attributes="0">
+                      <Component id="participant4IDField" min="-2" pref="50" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="participant4NameField" max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="1" attributes="0">
+                      <Component id="participant3IDField" min="-2" pref="50" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="participant3NameField" max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="1" attributes="0">
+                      <Component id="participant2IDField" min="-2" pref="50" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+                      <Component id="participant2NameField" max="32767" attributes="0"/>
+                  </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="participant1IDField" min="-2" pref="50" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                       <Component id="participant1NameField" min="-2" pref="150" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="jLabelInfo" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="btnLoadDatabase" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="20" pref="20" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <Component id="participant1EmailField" min="-2" pref="200" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="btnViewP1Data" alignment="1" min="-2" max="-2" attributes="0"/>
-                          <Component id="participantBackBtn" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabelEmail" min="-2" max="-2" attributes="0"/>
+                          <Component id="participant4EmailField" alignment="0" min="-2" pref="204" max="-2" attributes="0"/>
+                          <Component id="participant5EmailField" alignment="0" min="-2" pref="204" max="-2" attributes="0"/>
+                          <Component id="participant6EmailField" alignment="0" min="-2" pref="204" max="-2" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                  <Component id="participant3EmailField" alignment="0" pref="202" max="32767" attributes="0"/>
+                                  <Component id="participant1EmailField" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="participant2EmailField" alignment="0" max="32767" attributes="0"/>
+                              </Group>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Component id="btnViewP2Data" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" attributes="0">
+                                      <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
+                                      <Component id="btnViewP1Data" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                          </Group>
                       </Group>
                   </Group>
-                  <Group type="102" attributes="0">
-                      <Component id="jLabelEmail" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                  </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="participant2EmailField" min="-2" pref="202" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="119" max="-2" attributes="0"/>
+                      <Component id="btnAddParticipant" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="btnViewP2Data" max="32767" attributes="0"/>
+                      <Component id="participantBackBtn" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+              <EmptySpace min="20" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -106,17 +140,42 @@
                   <Component id="participant1EmailField" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnViewP1Data" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="participant2IDField" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="participant2NameField" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="participant2EmailField" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnViewP2Data" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="17" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="participant3IDField" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="participant3NameField" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="participant3EmailField" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="participant4IDField" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="participant4NameField" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="participant4EmailField" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="participant5IDField" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="participant5NameField" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="participant5EmailField" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="participant6IDField" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="participant6NameField" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="participant6EmailField" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace pref="50" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="participantBackBtn" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnLoadDatabase" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnAddParticipant" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
           </Group>
@@ -181,6 +240,41 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="View Data"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="participant3IDField">
+    </Component>
+    <Component class="javax.swing.JTextField" name="participant3NameField">
+    </Component>
+    <Component class="javax.swing.JTextField" name="participant3EmailField">
+    </Component>
+    <Component class="javax.swing.JTextField" name="participant4IDField">
+    </Component>
+    <Component class="javax.swing.JTextField" name="participant4NameField">
+    </Component>
+    <Component class="javax.swing.JTextField" name="participant4EmailField">
+    </Component>
+    <Component class="javax.swing.JTextField" name="participant5IDField">
+    </Component>
+    <Component class="javax.swing.JTextField" name="participant5NameField">
+    </Component>
+    <Component class="javax.swing.JTextField" name="participant5EmailField">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="participant5EmailFieldActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JTextField" name="participant6IDField">
+    </Component>
+    <Component class="javax.swing.JTextField" name="participant6NameField">
+    </Component>
+    <Component class="javax.swing.JTextField" name="participant6EmailField">
+    </Component>
+    <Component class="javax.swing.JButton" name="btnAddParticipant">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Add Participant"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAddParticipantActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

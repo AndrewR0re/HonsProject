@@ -110,9 +110,9 @@ public class ParticipantPasswordGUI extends javax.swing.JFrame {
         if(allowAccess){
             this.setVisible(false);
             
-            ParticipantGUI particpantGUI = new ParticipantGUI();
-            particpantGUI.setLocationRelativeTo(this);
-            particpantGUI.setVisible(true);
+            ParticipantGUI participantGUI = new ParticipantGUI();
+            participantGUI.setLocationRelativeTo(this);
+            participantGUI.setVisible(true);
         }
         else{
             JOptionPane.showMessageDialog(null,"Incorrect password. Access Denied.", "Incorrect Password.", JOptionPane.INFORMATION_MESSAGE);
