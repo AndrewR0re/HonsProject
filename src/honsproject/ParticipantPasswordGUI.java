@@ -61,6 +61,12 @@ public class ParticipantPasswordGUI extends javax.swing.JFrame {
             }
         });
 
+        jPasswordField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jPasswordField1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -125,6 +131,10 @@ public class ParticipantPasswordGUI extends javax.swing.JFrame {
         home.setVisible(true);
         home.setLocationRelativeTo(this);
     }//GEN-LAST:event_passwordCheckBackBtnActionPerformed
+
+    private void jPasswordField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordField1ActionPerformed
+        passwordCheckEnterBtn.doClick();
+    }//GEN-LAST:event_jPasswordField1ActionPerformed
 
     /**
      * @param args the command line arguments
