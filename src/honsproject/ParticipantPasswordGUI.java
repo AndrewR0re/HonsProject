@@ -42,6 +42,7 @@ public class ParticipantPasswordGUI extends javax.swing.JFrame {
         jPasswordField1 = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Enter Password");
 
         passwordCheckTitle.setText("Participant details are Password Protected!");
 

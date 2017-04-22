@@ -16,7 +16,7 @@ public class Participant {
     private String name;
     private String email;
 
-    public Participant(String id, String name, String email, String phone) {
+    public Participant(String id, String name, String email) {
         this.id = id;
         this.name = name;
         this.email = email;
