@@ -24,12 +24,12 @@ import javax.swing.table.DefaultTableModel;
 
 public class ParticipantGUI extends javax.swing.JFrame {
 
-    private int numOfParticipants = 2;
     private ArrayList<Participant> listOfParticipants = new ArrayList<Participant>();
     private ArrayList<JTextField> idList = new ArrayList<JTextField>();
     private ArrayList<JTextField> nameList = new ArrayList<JTextField>();
     private ArrayList<JTextField> emailList = new ArrayList<JTextField>();
     private DefaultTableModel model;
+    public static ArrayList<Participant> participantArray = new ArrayList<>();
 
     /**
      * Creates new form ParticipantGUI
@@ -39,6 +39,8 @@ public class ParticipantGUI extends javax.swing.JFrame {
         model = (DefaultTableModel) participantDetailTable.getModel();
         participantDetailTable.setModel(model);
         updateTable();
+        wipeParticipantList();
+        initialiseParticipants();
     }
 
     private void updateTable() {
@@ -72,13 +74,104 @@ public class ParticipantGUI extends javax.swing.JFrame {
 
                 model.addRow(row);
             }
-
         } 
         
         catch (SQLException err) {
             System.out.println(err.getMessage());
         }
     }
+    
+    public int countParticipants(){
+        int participantCount = 0;
+        
+        try {
+            //Instantiation of String and char[] variables representing host, username and password for Database
+            String host = "jdbc:derby://localhost:1527/HonsProjectDatabase";
+            String username = "andrew";
+            char[] passwordArray = new char[]{'P', 'a', 'l', 'l', 'a', 'd', 'i', 'u', 'm', '1'};
+            String password = "";
+
+            for (char currentChar : passwordArray) {
+                password += currentChar;
+            }
+
+            //Statement initiates connection with Database
+            Connection con = DriverManager.getConnection(host, username, password);
+
+            Statement rowCountStatement = con.createStatement();
+
+            ResultSet rowCountResult = rowCountStatement.executeQuery("SELECT COUNT(*) FROM PARTICIPANTDETAILS");
+
+            rowCountResult.next();
+            participantCount= rowCountResult.getInt(1);
+            rowCountStatement.close();
+
+        }
+
+        catch (SQLException err) {
+            System.out.println(err.getMessage());
+        }
+      
+        return participantCount;
+    }
+    
+    public void wipeParticipantList(){
+        
+        this.participantArray.clear();
+    }
+    
+    public void initialiseParticipants(){
+        
+        int participantCount = countParticipants();
+        
+        //for(int i=0 ; i<participantCount ; i++){
+            
+            try {
+                //Instantiation of String and char[] variables representing host, username and password for Database
+                String host = "jdbc:derby://localhost:1527/HonsProjectDatabase";
+                String username = "andrew";
+                char[] passwordArray = new char[]{'P', 'a', 'l', 'l', 'a', 'd', 'i', 'u', 'm', '1'};
+                String password = "";
+
+                for (char currentChar : passwordArray) {
+                    password += currentChar;
+                }
+
+                //Statement initiates connection with Database
+                Connection con = DriverManager.getConnection(host, username, password);
+
+                Statement statement = con.createStatement();
+
+                ResultSet rs = statement.executeQuery("SELECT * FROM PARTICIPANTDETAILS");
+
+                while (rs.next()) {
+                    int current_ID = rs.getInt("ID");
+
+                    String current_Name = rs.getString("FIRST_NAME") + " " + rs.getString("LAST_NAME");
+                    String current_Email = rs.getString("EMAIL");
+
+                    participantArray.add(new Participant(Integer.toString(current_ID), current_Name, current_Email));
+                }
+            } 
+        
+            catch (SQLException err) {
+                System.out.println(err.getMessage());
+            }   
+        //}
+    }
+    
+    public static ArrayList getParticipantArrayList(){
+        
+        ArrayList<Participant> participantArrayList = new ArrayList<>();
+        
+        
+        for(int i = 0 ; i<participantArray.size() ; i++){
+            participantArrayList.add(participantArray.get(i));
+        }
+        
+        return participantArrayList;
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -143,25 +236,23 @@ public class ParticipantGUI extends javax.swing.JFrame {
                 {null, null, null}
             },
             new String [] {
-                "ID", "Name", "Email"
+                "ID", "Name", "Email Address"
             }
         ) {
             Class[] types = new Class [] {
                 java.lang.Integer.class, java.lang.String.class, java.lang.String.class
             };
-            boolean[] canEdit = new boolean [] {
-                false, false, false
-            };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
         });
         jScrollPane2.setViewportView(participantDetailTable);
+        if (participantDetailTable.getColumnModel().getColumnCount() > 0) {
+            participantDetailTable.getColumnModel().getColumn(0).setMinWidth(10);
+            participantDetailTable.getColumnModel().getColumn(0).setPreferredWidth(10);
+            participantDetailTable.getColumnModel().getColumn(1).setPreferredWidth(50);
+        }
 
         btnViewData.setText("View Eye Tracking Data");
         btnViewData.addActionListener(new java.awt.event.ActionListener() {
@@ -181,13 +272,13 @@ public class ParticipantGUI extends javax.swing.JFrame {
                         .addComponent(jLabelInfo)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(participantBackBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnAddParticipant, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnViewData, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(btnAddParticipant, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnViewData, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(participantBackBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(20, 20, 20))))
         );
         layout.setVerticalGroup(
@@ -195,17 +286,16 @@ public class ParticipantGUI extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addComponent(jLabelInfo)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGap(20, 20, 20)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnAddParticipant)
                         .addGap(18, 18, 18)
                         .addComponent(btnViewData)
-                        .addGap(363, 363, 363))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(participantBackBtn)
-                .addGap(20, 20, 20))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(participantBackBtn))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         pack();
@@ -213,7 +303,7 @@ public class ParticipantGUI extends javax.swing.JFrame {
 
     private void participantBackBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_participantBackBtnActionPerformed
         this.dispose();
-        MainGUI mainGUI = new MainGUI();
+        HomeGUI mainGUI = new HomeGUI();
         mainGUI.setLocationRelativeTo(this);
         mainGUI.setVisible(true);
 
@@ -252,10 +342,10 @@ public class ParticipantGUI extends javax.swing.JFrame {
             
             boolean nullValueFailsafe = true;
             
-            if(newParticipantFirstName == null || newParticipantSecondName == null || newParticipantEmail== null){
+            if(newParticipantFirstName.equals("") || newParticipantSecondName.equals("") || newParticipantEmail.equals("")){
                 nullValueFailsafe = false;
             }
-
+            
             if(nullValueFailsafe){
                 try {
 
@@ -270,15 +360,10 @@ public class ParticipantGUI extends javax.swing.JFrame {
                     }
 
                     //Statement initiates connection with Database
+                    
                     Connection con = DriverManager.getConnection(host, username, password);
 
-                    Statement rowCountStatement = con.createStatement();
-
-                    ResultSet rowCountResult = rowCountStatement.executeQuery("SELECT COUNT(*) FROM PARTICIPANTDETAILS");
-
-                    rowCountResult.next();
-                    int rowCount = rowCountResult.getInt(1);
-                    rowCountStatement.close();
+                    int rowCount = countParticipants();
 
                     Statement insertStatement = con.createStatement();
 
@@ -290,18 +375,18 @@ public class ParticipantGUI extends javax.swing.JFrame {
                     con.close();
 
                     updateTable();
-                    /*
-                int p1_ID = rs.getInt("ID");
-                String p1_first_name = rs.getString("First_Name");
-                String p1_last_name = rs.getString("Last_Name");
-                String p1_full_name = p1_first_name + " " + p1_last_name;
-                String p1_email = rs.getString("Email");
-                     */
+                    
+                    participantArray.add(new Participant(Integer.toString(countParticipants()), newParticipantFirstName + " " + newParticipantSecondName, newParticipantEmail));
+                    
+                    initialiseParticipants();
                 }
 
                 catch (SQLException err) {
                     System.out.println(err.getMessage());
                 }
+            }
+            else{
+                JOptionPane.showMessageDialog(null,"Incomplete Participant details" + "\n" + "Enter full details", "Error", JOptionPane.INFORMATION_MESSAGE);
             }
         }
 
@@ -309,7 +394,7 @@ public class ParticipantGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAddParticipantActionPerformed
 
     private void btnViewDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewDataActionPerformed
-        ChooseParticipantData choice = new ChooseParticipantData();
+        ChooseParticipantDataGUI choice = new ChooseParticipantDataGUI();
         choice.setLocationRelativeTo(this);
         choice.setVisible(true);
     }//GEN-LAST:event_btnViewDataActionPerformed

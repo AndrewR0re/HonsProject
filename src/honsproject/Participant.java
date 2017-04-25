@@ -23,12 +23,8 @@ public class Participant {
     }
     
     
-    //Methods handling retreival and assignment of Participant ID field
+    //Methods handling retreival of Participant ID field
     
-    //Method sets value of Participant ID field
-    public void setID(String id){
-        this.id = id;
-    }
     
     //Method returns value of Participant ID field
     public String getID(){
@@ -59,5 +55,9 @@ public class Participant {
     //Method returns value of Participant Email field
     public String getEmail(){
         return this.email;
+    }
+    
+    public String toString(){
+        return(this.getID() + " " + this.getName() + " " + this.getEmail());
     }
 }

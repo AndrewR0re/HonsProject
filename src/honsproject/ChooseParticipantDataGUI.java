@@ -5,25 +5,26 @@
  */
 package honsproject;
 
+import static honsproject.ParticipantGUI.getParticipantArrayList;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 /**
  *
  * @author 1305997
  */
-public class ChooseParticipantData extends javax.swing.JFrame {
+public class ChooseParticipantDataGUI extends javax.swing.JFrame {
 
     /**
      * Creates new form ChooseParticipantData
      */
-    public ChooseParticipantData() {
+    public ChooseParticipantDataGUI() {
         initComponents();
         updateComboBox();
-        createParticipantInstances();
     }
     
     public void updateComboBox(){
@@ -47,10 +48,10 @@ public class ChooseParticipantData extends javax.swing.JFrame {
             ResultSet rs = statement.executeQuery("SELECT * FROM PARTICIPANTDETAILS");
 
             while (rs.next()) {
-                String current_FName = rs.getString("FIRST_NAME");
-                String current_SName = rs.getString("LAST_NAME");
+                String FName = rs.getString("FIRST_NAME");
+                String SName = rs.getString("LAST_NAME");
                 
-                String fullName = current_FName + " " + current_SName;
+                String fullName = FName + " " + SName;
                 
                 this.jComboBoxParticipantList.addItem(fullName);
                 
@@ -73,7 +74,7 @@ public class ChooseParticipantData extends javax.swing.JFrame {
                 char[] passwordArray = new char[]{'P', 'a', 'l', 'l', 'a', 'd', 'i', 'u', 'm', '1'};
                 String password = "";
 
-                for (char currentChar : passwordArray) {
+                for(char currentChar : passwordArray) {
                     password += currentChar;
                 }
 
@@ -98,13 +99,23 @@ public class ChooseParticipantData extends javax.swing.JFrame {
         return rowCount;
     }
     
-    public void createParticipantInstances(){
+    public Participant resolveParticipantFromName(String name){
         
-        int participantCount = countParticipants();
+        ArrayList<Participant> participantArrayList = new ArrayList<>();
         
+        participantArrayList = getParticipantArrayList(); 
         
+        Participant resultParticipant = null;
         
+        for(Participant p : participantArrayList){
+            if(p.getName().equals(name)){
+                resultParticipant = p;
+            }
+        }
+        return resultParticipant;
     }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -119,12 +130,11 @@ public class ChooseParticipantData extends javax.swing.JFrame {
         btnCancel = new javax.swing.JButton();
         jComboBoxParticipantList = new javax.swing.JComboBox<>();
         btnViewData = new javax.swing.JButton();
-        count = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Choose a Participant");
 
-        jLabel1.setText("Please select a Participant to view their data.");
+        jLabel1.setText("Select a Participant to view their data.");
 
         btnCancel.setText("Cancel");
         btnCancel.addActionListener(new java.awt.event.ActionListener() {
@@ -145,20 +155,14 @@ public class ChooseParticipantData extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addContainerGap(73, Short.MAX_VALUE))
+                        .addContainerGap(53, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jComboBoxParticipantList, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(count, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(27, 27, 27)))
+                        .addComponent(jComboBoxParticipantList, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btnCancel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnViewData, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -173,11 +177,9 @@ public class ChooseParticipantData extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jComboBoxParticipantList, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnViewData))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnCancel)
-                    .addComponent(count, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(20, 20, 20))
+                .addGap(20, 20, 20)
+                .addComponent(btnCancel)
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         pack();
@@ -191,6 +193,18 @@ public class ChooseParticipantData extends javax.swing.JFrame {
 
     private void btnViewDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewDataActionPerformed
         
+        this.dispose();
+        
+        Object selectedItem = jComboBoxParticipantList.getSelectedItem();
+        
+        String str = selectedItem.toString();
+        
+        
+        Participant selectedParticipant = resolveParticipantFromName(str);
+        
+        ParticipantDataGUI selectedData = new ParticipantDataGUI(selectedParticipant);
+        selectedData.setLocationRelativeTo(this);
+        selectedData.setVisible(true);
     }//GEN-LAST:event_btnViewDataActionPerformed
 
     /**
@@ -210,20 +224,21 @@ public class ChooseParticipantData extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ChooseParticipantData.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ChooseParticipantDataGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ChooseParticipantData.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ChooseParticipantDataGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ChooseParticipantData.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ChooseParticipantDataGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ChooseParticipantData.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ChooseParticipantDataGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ChooseParticipantData().setVisible(true);
+                new ChooseParticipantDataGUI().setVisible(true);
             }
         });
     }
@@ -231,7 +246,6 @@ public class ChooseParticipantData extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancel;
     private javax.swing.JButton btnViewData;
-    private javax.swing.JTextField count;
     private javax.swing.JComboBox<String> jComboBoxParticipantList;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
