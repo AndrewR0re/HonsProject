@@ -5,6 +5,11 @@
  */
 package honsproject;
 
+import java.awt.Image;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+
 /**
  *
  * @author 1305997
@@ -12,6 +17,8 @@ package honsproject;
 public class ParticipantDataGUI extends javax.swing.JFrame {
     
     public static Participant participant;
+    public int selectedVisualisationMode = 0;
+    public String selectedImagePath = "resources/";
 
     /**
      * Creates new form ParticipantData
@@ -30,7 +37,11 @@ public class ParticipantDataGUI extends javax.swing.JFrame {
     public void initialiseData(){
         
         this.jLabelName.setText(this.getParticipant().getName());
-    
+
+        ImageIcon iconLogo = new ImageIcon("resources/img.png");
+        this.imageLabel.setIcon(iconLogo);
+        
+        this.radioGazePlot.setSelected(true);
     }
 
     /**
@@ -42,9 +53,20 @@ public class ParticipantDataGUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
+        buttonGroup2 = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
         btnBack = new javax.swing.JButton();
         jLabelName = new javax.swing.JLabel();
+        imageLabel = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        selectedImage = new javax.swing.JComboBox<>();
+        jLabel3 = new javax.swing.JLabel();
+        radioGazePlot = new javax.swing.JRadioButton();
+        radioHeatmap = new javax.swing.JRadioButton();
+        btnLoadImage = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Experimental Data");
@@ -60,6 +82,39 @@ public class ParticipantDataGUI extends javax.swing.JFrame {
 
         jLabelName.setText("Participant name here");
 
+        imageLabel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        jLabel2.setText("Select Experiment Image:");
+
+        selectedImage.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24" }));
+
+        jLabel3.setText("Select Visualisation Mode:");
+
+        radioGazePlot.setText("Gaze Plot");
+        radioGazePlot.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radioGazePlotActionPerformed(evt);
+            }
+        });
+
+        radioHeatmap.setText("Heatmap");
+        radioHeatmap.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radioHeatmapActionPerformed(evt);
+            }
+        });
+
+        btnLoadImage.setText("Load Image");
+        btnLoadImage.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLoadImageActionPerformed(evt);
+            }
+        });
+
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jScrollPane1.setViewportView(jTextArea1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -67,26 +122,62 @@ public class ParticipantDataGUI extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jLabel2)
+                        .addComponent(jLabel3)
+                        .addComponent(btnLoadImage)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnBack)
-                        .addGap(20, 20, 20))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabelName, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(363, Short.MAX_VALUE))))
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(selectedImage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(radioGazePlot)
+                            .addComponent(radioHeatmap))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(imageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnBack)
+                                .addGap(40, 40, 40))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(20, 20, 20)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(20, Short.MAX_VALUE))))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jLabelName))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 332, Short.MAX_VALUE)
-                .addComponent(btnBack)
-                .addGap(20, 20, 20))
+                .addGap(20, 20, 20)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1)
+                        .addGap(20, 20, 20)
+                        .addComponent(btnBack))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(imageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jLabel2)
+                                    .addGap(30, 30, 30)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(jLabel3)
+                                        .addComponent(radioGazePlot)))
+                                .addComponent(selectedImage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(radioHeatmap)
+                                .addComponent(btnLoadImage)))))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         pack();
@@ -99,6 +190,29 @@ public class ParticipantDataGUI extends javax.swing.JFrame {
         ParticipantGUI participantGui = new ParticipantGUI();
         participantGui.setLocationRelativeTo(this);
     }//GEN-LAST:event_btnBackActionPerformed
+
+    private void radioGazePlotActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioGazePlotActionPerformed
+        
+        if(this.radioGazePlot.isSelected()){
+            this.radioHeatmap.setSelected(false);
+            this.selectedVisualisationMode = 0;
+        }
+    }//GEN-LAST:event_radioGazePlotActionPerformed
+
+    private void radioHeatmapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioHeatmapActionPerformed
+        
+        if(this.radioHeatmap.isSelected()){
+            this.radioGazePlot.setSelected(false);
+            this.selectedVisualisationMode = 1;
+        }
+    }//GEN-LAST:event_radioHeatmapActionPerformed
+
+    private void btnLoadImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoadImageActionPerformed
+        
+        String constructedPath = this.selectedImagePath;
+        
+        constructedPath += this.getParticipant().getName() + "/" + Integer.toString(this.selectedImage.getSelectedIndex()) + "/" + Integer.toString(this.selectedVisualisationMode) + "img.png";
+    }//GEN-LAST:event_btnLoadImageActionPerformed
 
     /**
      * @param args the command line arguments
@@ -138,7 +252,18 @@ public class ParticipantDataGUI extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;
+    private javax.swing.JButton btnLoadImage;
+    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.ButtonGroup buttonGroup2;
+    private javax.swing.JLabel imageLabel;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabelName;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JRadioButton radioGazePlot;
+    private javax.swing.JRadioButton radioHeatmap;
+    private javax.swing.JComboBox<String> selectedImage;
     // End of variables declaration//GEN-END:variables
 }
