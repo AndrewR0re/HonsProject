@@ -9,10 +9,12 @@ import javax.swing.JOptionPane;
 import java.util.Arrays;
 
 /**
- *
- * @author 1305997
+ * @author Andrew John Rore 1305997
+ * @version Feb 2017
+ * 
+ * This class is responsible for 
  */
-public class HomeGUI extends javax.swing.JFrame {
+public class DbPasswordCheck extends javax.swing.JFrame {
 
     /**
      * Creates new form ParticipantPasswordGUI
@@ -20,9 +22,9 @@ public class HomeGUI extends javax.swing.JFrame {
     
     ParticipantPassword participantGUIPassword = new ParticipantPassword();
     private final char[] password = participantGUIPassword.getPassword();
-    public boolean allowAccess = false;
+    public static boolean allowAccess = false;
 
-    public HomeGUI() {
+    public DbPasswordCheck() {
         initComponents();
     }
 
@@ -41,9 +43,10 @@ public class HomeGUI extends javax.swing.JFrame {
         jPasswordField1 = new javax.swing.JPasswordField();
         btnExit = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Welcome to JTrack");
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Password Check");
 
+        passwordCheckTitle.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         passwordCheckTitle.setText("Participant details are Password Protected!");
 
         passwordCheckLabel.setText("Enter Password:");
@@ -61,7 +64,7 @@ public class HomeGUI extends javax.swing.JFrame {
             }
         });
 
-        btnExit.setText("Exit");
+        btnExit.setText("Back");
         btnExit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnExitActionPerformed(evt);
@@ -77,12 +80,12 @@ public class HomeGUI extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(passwordCheckLabel)
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(btnExit)
-                                .addGap(20, 20, 20)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(passwordCheckEnterBtn))))
                     .addComponent(passwordCheckTitle))
                 .addContainerGap(20, Short.MAX_VALUE))
@@ -90,9 +93,9 @@ public class HomeGUI extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(20, Short.MAX_VALUE)
+                .addContainerGap(17, Short.MAX_VALUE)
                 .addComponent(passwordCheckTitle)
-                .addGap(20, 20, 20)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(passwordCheckLabel))
@@ -114,13 +117,11 @@ public class HomeGUI extends javax.swing.JFrame {
         
         if(allowAccess){
             this.dispose();
-            
-            ParticipantGUI participantGUI = new ParticipantGUI();
-            participantGUI.setLocationRelativeTo(this);
-            participantGUI.setVisible(true);
+            ParticipantGUI.updateTable();
+            ParticipantGUI.liftDbRestriction();
         }
         else{
-            JOptionPane.showMessageDialog(null,"Incorrect password. Access Denied.", "Incorrect Password.", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null,"Incorrect password. Access Denied.", "Incorrect Password.", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_passwordCheckEnterBtnActionPerformed
 
@@ -130,11 +131,7 @@ public class HomeGUI extends javax.swing.JFrame {
 
     private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
         
-        int result = JOptionPane.showConfirmDialog(null,"Are you sure you want to exit?","Exit?", JOptionPane.OK_CANCEL_OPTION);
-
-       if (result==0){
-           System.exit(0);
-       }
+        this.dispose();
     }//GEN-LAST:event_btnExitActionPerformed
 
     /**
@@ -154,21 +151,23 @@ public class HomeGUI extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(HomeGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DbPasswordCheck.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(HomeGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DbPasswordCheck.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(HomeGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DbPasswordCheck.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(HomeGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DbPasswordCheck.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new HomeGUI().setVisible(true);
+                new DbPasswordCheck().setVisible(true);
             }
         });
     }

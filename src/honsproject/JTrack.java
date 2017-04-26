@@ -6,9 +6,11 @@
 package honsproject;
 
 /**
- *
- * @author 1305997
+ * @author Andrew John Rore 1305997
  * @version Feb 2017
+ * 
+ * This class is responsible for initiating user interaction with the JTrack
+ * software by creating an instance of the first GUI element. 
  */
 public class JTrack {
 
@@ -18,10 +20,9 @@ public class JTrack {
     public static void main(String[] args){
         
         //Creating and spawning GUI objects
-        HomeGUI mainGUI = new HomeGUI();
+        ParticipantGUI mainGUI = new ParticipantGUI();
         mainGUI.pack();
         mainGUI.setLocationRelativeTo(null);
         mainGUI.setVisible(true);
     }
-    
 }

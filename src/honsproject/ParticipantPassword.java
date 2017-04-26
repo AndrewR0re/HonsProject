@@ -7,7 +7,8 @@ package honsproject;
 
 /**
  *
- * @author 1305997
+ * @author Andrew John Rore 1305997
+ * @version Feb 2017
  */
 public class ParticipantPassword {
     
