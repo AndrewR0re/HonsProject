@@ -29,6 +29,7 @@ public class ParticipantGUI extends javax.swing.JFrame {
     private ArrayList<JTextField> nameList = new ArrayList<>();
     private ArrayList<JTextField> emailList = new ArrayList<>();
     public static DefaultTableModel model;
+    public static DefaultTableModel blankModel;
     public static ArrayList<Participant> participantArray = new ArrayList<>();
     public static boolean allowedDeeperAccess = false;
 
@@ -38,9 +39,35 @@ public class ParticipantGUI extends javax.swing.JFrame {
     public ParticipantGUI() {
         initComponents();
         model = (DefaultTableModel) participantDetailTable.getModel();
+        model.setRowCount(0);
         participantDetailTable.setModel(model);
         wipeParticipantList();
         initialiseParticipants();
+        this.updateInfoHeader();
+        verifyDbAccess();
+        
+    }
+    
+    public static void verifyDbAccess(){
+        
+        if(ParticipantDataGUI.dbUnlocked){
+            
+            liftDbRestriction();
+            updateTable();
+        }
+        
+        else{  
+        }
+    }
+
+    public static void updateInfoHeader() {
+
+        if (allowedDeeperAccess) {
+            ParticipantGUI.infoLabel.setText("list of Participants assisting in Experiments:");
+
+        } else {
+            ParticipantGUI.infoLabel.setText("Load Database to view list of Participants.");
+        }
     }
 
     public static void updateTable() {
@@ -59,9 +86,7 @@ public class ParticipantGUI extends javax.swing.JFrame {
 
             //Statement initiates connection with Database
             Connection con = DriverManager.getConnection(host, username, password);
-
             Statement statement = con.createStatement();
-
             ResultSet rs = statement.executeQuery("SELECT * FROM PARTICIPANTDETAILS");
 
             while (rs.next()) {
@@ -74,15 +99,14 @@ public class ParticipantGUI extends javax.swing.JFrame {
 
                 model.addRow(row);
             }
-        } 
-        catch (SQLException err) {
+        } catch (SQLException err) {
             System.out.println(err.getMessage());
         }
     }
-    
-    public int countParticipants(){
+
+    public static int countParticipants() {
         int participantCount = 0;
-        
+
         try {
             //Instantiation of String and char[] variables representing host, username and password for Database
             String host = "jdbc:derby://localhost:1527/HonsProjectDatabase";
@@ -96,92 +120,106 @@ public class ParticipantGUI extends javax.swing.JFrame {
 
             //Statement initiates connection with Database
             Connection con = DriverManager.getConnection(host, username, password);
-
             Statement rowCountStatement = con.createStatement();
-
             ResultSet rowCountResult = rowCountStatement.executeQuery("SELECT COUNT(*) FROM PARTICIPANTDETAILS");
 
             rowCountResult.next();
-            participantCount= rowCountResult.getInt(1);
+            participantCount = rowCountResult.getInt(1);
             rowCountStatement.close();
-
-        }
-
-        catch (SQLException err) {
+        } catch (SQLException err) {
             System.out.println(err.getMessage());
         }
-      
         return participantCount;
     }
-    
-    public static void wipeParticipantList(){
-        
+
+    public static void wipeParticipantList() {
+
         participantArray.clear();
     }
-    
-    public void initialiseParticipants(){
-        
+
+    public void initialiseParticipants() {
+
         int participantCount = countParticipants();
-        
-        //for(int i=0 ; i<participantCount ; i++){
-            
-            try {
-                //Instantiation of String and char[] variables representing host, username and password for Database
-                String host = "jdbc:derby://localhost:1527/HonsProjectDatabase";
-                String username = "andrew";
-                char[] passwordArray = new char[]{'P', 'a', 'l', 'l', 'a', 'd', 'i', 'u', 'm', '1'};
-                String password = "";
 
-                for (char currentChar : passwordArray) {
-                    password += currentChar;
-                }
+        try {
+            //Instantiation of String and char[] variables representing host, username and password for Database
+            String host = "jdbc:derby://localhost:1527/HonsProjectDatabase";
+            String username = "andrew";
+            char[] passwordArray = new char[]{'P', 'a', 'l', 'l', 'a', 'd', 'i', 'u', 'm', '1'};
+            String password = "";
 
-                //Statement initiates connection with Database
-                Connection con = DriverManager.getConnection(host, username, password);
+            for (char currentChar : passwordArray) {
+                password += currentChar;
+            }
 
-                Statement statement = con.createStatement();
+            //Statement initiates connection with Database
+            Connection con = DriverManager.getConnection(host, username, password);
+            Statement statement = con.createStatement();
+            ResultSet rs = statement.executeQuery("SELECT * FROM PARTICIPANTDETAILS");
 
-                ResultSet rs = statement.executeQuery("SELECT * FROM PARTICIPANTDETAILS");
+            while (rs.next()) {
 
-                while (rs.next()) {
-                    int current_ID = rs.getInt("ID");
+                int current_ID = rs.getInt("ID");
+                String current_Name = rs.getString("FIRST_NAME") + " " + rs.getString("LAST_NAME");
+                String current_Email = rs.getString("EMAIL");
 
-                    String current_Name = rs.getString("FIRST_NAME") + " " + rs.getString("LAST_NAME");
-                    String current_Email = rs.getString("EMAIL");
-
-                    participantArray.add(new Participant(Integer.toString(current_ID), current_Name, current_Email));
-                }
-            } 
-        
-            catch (SQLException err) {
-                System.out.println(err.getMessage());
-            }   
-        //}
+                participantArray.add(new Participant(Integer.toString(current_ID), current_Name, current_Email));
+            }
+        } catch (SQLException err) {
+            System.out.println(err.getMessage());
+        }
     }
-    
-    public static void liftDbRestriction(){
-        
+
+    public static void liftDbRestriction() {
+
         allowedDeeperAccess = true;
     }
-    
-    public static void engageDbRestriction(){
-        
-        wipeParticipantList();
-        allowedDeeperAccess= false;
+
+    public static void engageDbRestriction() {
+
+        allowedDeeperAccess = false;
     }
-    
-    public static ArrayList getParticipantArrayList(){
-        
+
+    public static ArrayList getParticipantArrayList() {
+
         ArrayList<Participant> participantArrayList = new ArrayList<>();
-        
-        
-        for(int i = 0 ; i<participantArray.size() ; i++){
+
+        for (int i = 0; i < participantArray.size(); i++) {
+
             participantArrayList.add(participantArray.get(i));
         }
-        
+
         return participantArrayList;
     }
     
+    public Participant resolveParticipantFromName(String name){
+        
+        ArrayList<Participant> participantArrayList = new ArrayList<>();
+        
+        participantArrayList = getParticipantArrayList(); 
+        
+        Participant resultParticipant = null;
+        
+        for(Participant p : participantArrayList){
+            if(p.getName().equals(name)){
+                resultParticipant = p;
+            }
+        }
+        return resultParticipant;
+    }
+    
+    public Participant resolveParticipantFromRowIndex(int index){
+        
+        ArrayList<Participant> participantArrayList = new ArrayList<>();
+        
+        participantArrayList = getParticipantArrayList(); 
+        
+        Participant resultParticipant = null;
+        
+        resultParticipant = participantArrayList.get(index);
+        
+        return resultParticipant;
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -199,12 +237,13 @@ public class ParticipantGUI extends javax.swing.JFrame {
         jMenu3 = new javax.swing.JMenu();
         jCheckBoxMenuItem1 = new javax.swing.JCheckBoxMenuItem();
         participantExitBtn = new javax.swing.JButton();
-        jLabelInfo = new javax.swing.JLabel();
+        infoLabel = new javax.swing.JLabel();
         btnAddParticipant = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         participantDetailTable = new javax.swing.JTable();
         btnViewData = new javax.swing.JButton();
         btnLoadDatabase = new javax.swing.JButton();
+        btnSecureDatabase = new javax.swing.JButton();
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
@@ -230,8 +269,8 @@ public class ParticipantGUI extends javax.swing.JFrame {
             }
         });
 
-        jLabelInfo.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabelInfo.setText("List of Participants assisting in experiments:");
+        infoLabel.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        infoLabel.setText("List of Participants assisting in experiments:");
 
         btnAddParticipant.setText("Add Participant");
         btnAddParticipant.addActionListener(new java.awt.event.ActionListener() {
@@ -280,66 +319,70 @@ public class ParticipantGUI extends javax.swing.JFrame {
             }
         });
 
+        btnSecureDatabase.setText("Secure Database");
+        btnSecureDatabase.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSecureDatabaseActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
+                .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabelInfo)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
+                    .addComponent(infoLabel, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(20, 20, 20)
-                                .addComponent(participantExitBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(btnAddParticipant, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(btnViewData, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(btnLoadDatabase, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                        .addGap(20, 20, 20))))
+                        .addGap(10, 10, 10)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(btnSecureDatabase, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnAddParticipant, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnLoadDatabase, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnViewData, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(participantExitBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jLabelInfo)
-                .addGap(20, 20, 20)
+                .addGap(10, 10, 10)
+                .addComponent(infoLabel)
+                .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnLoadDatabase)
-                        .addGap(20, 20, 20)
+                        .addGap(10, 10, 10)
                         .addComponent(btnAddParticipant)
-                        .addGap(20, 20, 20)
+                        .addGap(10, 10, 10)
                         .addComponent(btnViewData)
+                        .addGap(10, 10, 10)
+                        .addComponent(btnSecureDatabase)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(participantExitBtn))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void participantExitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_participantExitBtnActionPerformed
-        
-        int result = JOptionPane.showConfirmDialog(null,"Are you sure you want to Exit?","Exit?", JOptionPane.OK_CANCEL_OPTION);
 
-        if (result==0){
+        int result = JOptionPane.showConfirmDialog(this, "Are you sure you want to Exit?", "Exit", JOptionPane.YES_OPTION);
+
+        if (result == 0) {
+
             System.exit(0);
         }
-
     }//GEN-LAST:event_participantExitBtnActionPerformed
 
     private void btnAddParticipantActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddParticipantActionPerformed
-        
-        if(allowedDeeperAccess){
-        
+
+        if (allowedDeeperAccess) {
+
             JPanel panel = new JPanel(new GridLayout(0, 1, 5, 5));
 
             JLabel firstNameLabel = new JLabel("First name: ");
@@ -360,7 +403,7 @@ public class ParticipantGUI extends javax.swing.JFrame {
             panel.add(emailLabel);
             panel.add(newParticipantEmailField);
 
-            int value = JOptionPane.showConfirmDialog(null, panel, "Enter New Participant Details", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+            int value = JOptionPane.showConfirmDialog(this, panel, "Enter New Participant Details...", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 
             if (value == JOptionPane.OK_OPTION) {
 
@@ -371,11 +414,13 @@ public class ParticipantGUI extends javax.swing.JFrame {
 
                 boolean nullValueFailsafe = true;
 
-                if(newParticipantFirstName.equals("") || newParticipantSecondName.equals("") || newParticipantEmail.equals("")){
+                if (newParticipantFirstName.equals("") || newParticipantSecondName.equals("") || newParticipantEmail.equals("")) {
+
                     nullValueFailsafe = false;
                 }
 
-                if(nullValueFailsafe){
+                if (nullValueFailsafe) {
+
                     try {
 
                         //Instantiation of String and char[] variables representing host, username and password for Database
@@ -385,17 +430,14 @@ public class ParticipantGUI extends javax.swing.JFrame {
                         String password = "";
 
                         for (char currentChar : passwordArray) {
+
                             password += currentChar;
                         }
 
                         //Statement initiates connection with Database
-
                         Connection con = DriverManager.getConnection(host, username, password);
-
                         int rowCount = countParticipants();
-
                         Statement insertStatement = con.createStatement();
-
                         rowCount++;
 
                         int c = insertStatement.executeUpdate("INSERT INTO PARTICIPANTDETAILS (ID, FIRST_NAME, LAST_NAME, EMAIL) VALUES (" + rowCount + ",'" + newParticipantFirstName + "','" + newParticipantSecondName + "','" + newParticipantEmail + "')");
@@ -408,45 +450,70 @@ public class ParticipantGUI extends javax.swing.JFrame {
                         participantArray.add(new Participant(Integer.toString(countParticipants()), newParticipantFirstName + " " + newParticipantSecondName, newParticipantEmail));
 
                         initialiseParticipants();
-                    }
-
-                    catch (SQLException err) {
+                    } catch (SQLException err) {
                         System.out.println(err.getMessage());
                     }
-                }
-                else{
-                    JOptionPane.showMessageDialog(null,"Incomplete Participant details" + "\n" + "Enter full details", "Error", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+
+                    JOptionPane.showMessageDialog(this, "Incomplete Participant details." + "\n" + "Enter full details.", "Error", JOptionPane.INFORMATION_MESSAGE);
                 }
             }
-        }
-        
-        else{
-            JOptionPane.showMessageDialog(null,"Access to Database Retricted." + "\n" + "Load Database to Lift Restrictions.", "Error!", JOptionPane.ERROR_MESSAGE);
-        }
+        } else {
 
-
+            JOptionPane.showMessageDialog(this, "Access to Database Retricted." + "\n" + "Load Database to Lift Restrictions.", "Error!", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnAddParticipantActionPerformed
 
     private void btnViewDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewDataActionPerformed
         
-        if(allowedDeeperAccess){
-            ChooseParticipantDataGUI choice = new ChooseParticipantDataGUI();
-            choice.setLocationRelativeTo(this);
-            choice.setVisible(true);
+        int selectedRow = this.participantDetailTable.getSelectedRow();
+        
+        if(allowedDeeperAccess && selectedRow != -1){
+            
+            Participant selectedParticipant = resolveParticipantFromRowIndex(selectedRow);
+        
+            ParticipantDataGUI selectedData = new ParticipantDataGUI(selectedParticipant);
+            selectedData.setLocationRelativeTo(this);
+            selectedData.setVisible(true);
+            this.dispose();
+        }
+        
+        else if (allowedDeeperAccess && selectedRow == -1){
+            JOptionPane.showMessageDialog(this, "Please select a Participant." , "Please select a Participant", JOptionPane.INFORMATION_MESSAGE);
         }
         
         else{
-            JOptionPane.showMessageDialog(null,"Access to Database Retricted." + "\n" + "Load Database to Lift Restrictions.", "Error!", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Access to Database Retricted." + "\n" + "Load Database to Lift Restrictions.", "Error!", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnViewDataActionPerformed
 
     private void btnLoadDatabaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoadDatabaseActionPerformed
         
-        DbPasswordCheck passwordCheck = new DbPasswordCheck();
+        if(!allowedDeeperAccess){
+            DbPasswordCheck passwordCheck = new DbPasswordCheck();
+
+            passwordCheck.setLocationRelativeTo(this);
+            passwordCheck.setVisible(true);
+        }
         
-        passwordCheck.setLocationRelativeTo(this);
-        passwordCheck.setVisible(true);
+        else{
+            JOptionPane.showMessageDialog(this, "Database already loaded.", "For your information", JOptionPane.INFORMATION_MESSAGE);
+        }
     }//GEN-LAST:event_btnLoadDatabaseActionPerformed
+
+    private void btnSecureDatabaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSecureDatabaseActionPerformed
+        
+        if (allowedDeeperAccess){
+            
+            model.setRowCount(0);
+            engageDbRestriction();
+            
+        } 
+        else {
+
+            JOptionPane.showMessageDialog(this, "Database is Secured.","For Your Information.", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_btnSecureDatabaseActionPerformed
 
     /**
      * @param args the command line arguments
@@ -486,9 +553,10 @@ public class ParticipantGUI extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddParticipant;
     private javax.swing.JButton btnLoadDatabase;
+    private javax.swing.JButton btnSecureDatabase;
     private javax.swing.JButton btnViewData;
+    public static javax.swing.JLabel infoLabel;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
-    private javax.swing.JLabel jLabelInfo;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;

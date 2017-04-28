@@ -5,7 +5,11 @@
  */
 package honsproject;
 
+import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.RenderingHints;
+import java.awt.Transparency;
+import java.awt.image.BufferedImage;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -20,6 +24,8 @@ public class ParticipantDataGUI extends javax.swing.JFrame {
     public static Participant participant;
     public int selectedVisualisationMode = 0;
     public String selectedImagePath = "resources/";
+    public static ImageIcon imageIcon;
+    public static boolean dbUnlocked = false;
 
     /**
      * Creates new form ParticipantData
@@ -29,6 +35,8 @@ public class ParticipantDataGUI extends javax.swing.JFrame {
         this.participant = p;
         initComponents();
         initialiseData();
+        setDbUnlocked();
+        btnLoadImage.doClick();
     }
     
     public Participant getParticipant(){
@@ -38,11 +46,23 @@ public class ParticipantDataGUI extends javax.swing.JFrame {
     public void initialiseData(){
         
         this.jLabelParticipantName.setText("Showing Experimental Data of Participant : " + this.getParticipant().getName());
-
-        ImageIcon iconLogo = new ImageIcon("resources/img.png");
-        this.imageLabel.setIcon(iconLogo);
         
         this.radioGazePlot.setSelected(true);
+    }
+    
+    public static void setDbUnlocked(){
+        
+        ParticipantDataGUI.dbUnlocked = true;
+    }
+    
+    public static ImageIcon resize(ImageIcon image, int width, int height){
+        
+        BufferedImage bi = new BufferedImage(width, height, BufferedImage.TRANSLUCENT);
+        Graphics2D g2d = (Graphics2D) bi.createGraphics();
+        g2d.addRenderingHints(new RenderingHints(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY));
+        g2d.drawImage(imageIcon.getImage(),0,0,width,height,null);
+        g2d.dispose();
+        return new ImageIcon(bi);
     }
 
     /**
@@ -69,7 +89,7 @@ public class ParticipantDataGUI extends javax.swing.JFrame {
         jTextArea1 = new javax.swing.JTextArea();
         jLabel4 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Experimental Data");
 
         jLabelParticipantName.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
@@ -86,7 +106,7 @@ public class ParticipantDataGUI extends javax.swing.JFrame {
 
         jLabel2.setText("Select Experiment Image:");
 
-        selectedImage.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24" }));
+        selectedImage.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1A", "2B", "2A", "2C", "2E", "1B", "3F", "3A", "3D", "3B", "1C", "4F", "4D", "4E", "4C" }));
         selectedImage.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 selectedImageActionPerformed(evt);
@@ -120,52 +140,46 @@ public class ParticipantDataGUI extends javax.swing.JFrame {
         jTextArea1.setRows(5);
         jScrollPane1.setViewportView(jTextArea1);
 
-        jLabel4.setText("Image Notes");
+        jLabel4.setText("Image Notes:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
+                .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabelParticipantName, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3)
+                    .addComponent(btnBack)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabelParticipantName, javax.swing.GroupLayout.PREFERRED_SIZE, 425, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addGap(2, 2, 2)
-                                            .addComponent(jLabel4))))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(36, 36, 36)
+                                        .addComponent(jLabel3)
+                                        .addComponent(jLabel2)
+                                        .addComponent(jLabel4))
+                                    .addGap(18, 18, 18)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                             .addComponent(radioGazePlot, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                             .addComponent(radioHeatmap, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(selectedImage, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(18, 18, 18)
-                                        .addComponent(btnLoadImage)))
-                                .addGap(46, 46, 46)))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(imageLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 442, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnBack, javax.swing.GroupLayout.Alignment.TRAILING))))
-                .addContainerGap(20, Short.MAX_VALUE))
+                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                .addComponent(selectedImage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(8, 8, 8)))
+                                        .addComponent(btnLoadImage))))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(imageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 442, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
+                .addGap(10, 10, 10)
                 .addComponent(jLabelParticipantName)
-                .addGap(20, 20, 20)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGap(10, 10, 10)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
@@ -177,15 +191,17 @@ public class ParticipantDataGUI extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(radioHeatmap)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btnLoadImage, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnLoadImage)
+                            .addComponent(jLabel4))
                         .addGap(20, 20, 20)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(imageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(20, 20, 20)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 8, Short.MAX_VALUE)
+                        .addComponent(imageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(10, 10, 10)
                 .addComponent(btnBack)
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addGap(10, 10, 10))
         );
 
         pack();
@@ -193,10 +209,11 @@ public class ParticipantDataGUI extends javax.swing.JFrame {
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         
-        this.dispose();
-        
         ParticipantGUI participantGui = new ParticipantGUI();
         participantGui.setLocationRelativeTo(this);
+        participantGui.setVisible(true);
+        
+        this.dispose();
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void radioGazePlotActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioGazePlotActionPerformed
@@ -219,10 +236,11 @@ public class ParticipantDataGUI extends javax.swing.JFrame {
         
         String constructedPath = this.selectedImagePath;
         
-        constructedPath += this.getParticipant().getName() + "/" + Integer.toString(this.selectedImage.getSelectedIndex()) + "/" + Integer.toString(this.selectedVisualisationMode) + "/" + "img.png";
+        constructedPath += this.getParticipant().getName() + "/" + this.selectedImage.getSelectedItem().toString() + "/" + Integer.toString(this.selectedVisualisationMode) + "/" + "img.png";
         
-        ImageIcon iconLogo = new ImageIcon(constructedPath);
-        this.imageLabel.setIcon(iconLogo);
+        this.imageIcon = new ImageIcon(constructedPath);
+        
+        this.imageLabel.setIcon(resize(imageIcon,442,331));
     }//GEN-LAST:event_btnLoadImageActionPerformed
 
     private void selectedImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectedImageActionPerformed
