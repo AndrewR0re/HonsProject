@@ -17,6 +17,10 @@ public class JTrack {
     /**
      * @param args the command line arguments
      */
+    
+    public static void conect(){
+
+    }
     public static void main(String[] args){
         
         try {
@@ -35,6 +39,8 @@ public class JTrack {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(ParticipantGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        
+        
         
         //Creating and spawning GUI objects
         ParticipantGUI mainGUI = new ParticipantGUI();
