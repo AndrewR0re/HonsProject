@@ -17,6 +17,13 @@ import javax.imageio.ImageIO;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+
 
 /**
  *
@@ -27,14 +34,16 @@ public class ParticipantDataGUI extends javax.swing.JFrame {
     
     public static Participant participant;
     public int selectedVisualisationMode = 0;
-    public String selectedImagePath = "resources/";
-    public static ImageIcon imageIcon;
+    public String pathRoot = "resources/";
+    public static ImageIcon image1;
+    public static ImageIcon image2;
     public static boolean dbUnlocked = false;
+    public int pair;
 
     /**
      * Creates new form ParticipantData
      */
-    public ParticipantDataGUI(Participant p) {
+    public ParticipantDataGUI(Participant p) throws Exception {
         
         this.participant = p;
         initComponents();
@@ -47,7 +56,7 @@ public class ParticipantDataGUI extends javax.swing.JFrame {
         return this.participant;
     }
     
-    public void initialiseData(){
+    public void initialiseData() throws Exception{
         
         this.jLabelParticipantName.setText("Showing Experimental Data of Participant : " + this.getParticipant().getName());
         
@@ -59,12 +68,40 @@ public class ParticipantDataGUI extends javax.swing.JFrame {
         ParticipantDataGUI.dbUnlocked = true;
     }
     
+    public String readPairNotesFromFile() throws Exception{
+        
+        String text = "";
+        
+        FileReader file = new FileReader(pathRoot + this.participant.getName() + "/" + (this.selectedPair.getSelectedItem().toString()) + "/" + "imagePairNotes.txt");
+        BufferedReader reader = new BufferedReader(file);
+        String line = reader.readLine();
+        
+        while(line!=null){
+            text+=line;
+            line = reader.readLine();
+        }
+        reader.close();
+        return text;
+    }
+    
+    public void writePairNotesToFile() throws Exception{
+        
+        String text = this.imagePairAnnotationField.getText();
+        
+        File newFile = new File(pathRoot + this.participant.getName() + "/" + (this.selectedPair.getSelectedItem().toString()) + "/" + "imagePairNotes.txt");
+        FileWriter fw = new FileWriter(newFile);
+        BufferedWriter bw = new BufferedWriter(fw);
+        
+        bw.write(text);
+        bw.close();
+    }
+    
     public static ImageIcon resize(ImageIcon image, int width, int height){
         
         BufferedImage bi = new BufferedImage(width, height, BufferedImage.TRANSLUCENT);
         Graphics2D g2d = (Graphics2D) bi.createGraphics();
         g2d.addRenderingHints(new RenderingHints(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY));
-        g2d.drawImage(imageIcon.getImage(),0,0,width,height,null);
+        g2d.drawImage(image.getImage(),0,0,width,height,null);
         g2d.dispose();
         return new ImageIcon(bi);
     }
@@ -83,17 +120,18 @@ public class ParticipantDataGUI extends javax.swing.JFrame {
         buttonGroup2 = new javax.swing.ButtonGroup();
         jLabelParticipantName = new javax.swing.JLabel();
         btnBack = new javax.swing.JButton();
-        imageLabel = new javax.swing.JLabel();
+        imageLabel2 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        selectedImage = new javax.swing.JComboBox<>();
+        selectedPair = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
         radioGazePlot = new javax.swing.JRadioButton();
         radioHeatmap = new javax.swing.JRadioButton();
         btnLoadImage = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        imagePairAnnotationField = new javax.swing.JTextArea();
         jLabel4 = new javax.swing.JLabel();
-        btnViewComparisonPair = new javax.swing.JButton();
+        imageLabel1 = new javax.swing.JLabel();
+        btnSaveNotes = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Experimental Data");
@@ -108,14 +146,14 @@ public class ParticipantDataGUI extends javax.swing.JFrame {
             }
         });
 
-        imageLabel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        imageLabel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jLabel2.setText("Select Experiment Image:");
+        jLabel2.setText("Select Image Pair:");
 
-        selectedImage.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1A", "2B", "2A", "2C", "2E", "1B", "3F", "3A", "3D", "3B", "1C", "4F", "4D", "4E", "4C" }));
-        selectedImage.addActionListener(new java.awt.event.ActionListener() {
+        selectedPair.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pair 1", "Pair 2", "Pair 3", "Pair 4", "Pair 5", "Pair 6", "Pair 7", "Pair 8", "Pair 9", "Pair 10", "Pair 11", "Pair 12" }));
+        selectedPair.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                selectedImageActionPerformed(evt);
+                selectedPairActionPerformed(evt);
             }
         });
 
@@ -135,23 +173,26 @@ public class ParticipantDataGUI extends javax.swing.JFrame {
             }
         });
 
-        btnLoadImage.setText("Load Image");
+        btnLoadImage.setText("Load Image Pair");
         btnLoadImage.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLoadImageActionPerformed(evt);
             }
         });
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        imagePairAnnotationField.setColumns(20);
+        imagePairAnnotationField.setFont(new java.awt.Font("Calibri", 0, 13)); // NOI18N
+        imagePairAnnotationField.setRows(5);
+        jScrollPane1.setViewportView(imagePairAnnotationField);
 
-        jLabel4.setText("Image Notes:");
+        jLabel4.setText("Image Pair Notes:");
 
-        btnViewComparisonPair.setText("View Comparison Pair");
-        btnViewComparisonPair.addActionListener(new java.awt.event.ActionListener() {
+        imageLabel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        btnSaveNotes.setText("Save");
+        btnSaveNotes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnViewComparisonPairActionPerformed(evt);
+                btnSaveNotesActionPerformed(evt);
             }
         });
 
@@ -161,68 +202,73 @@ public class ParticipantDataGUI extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(10, 10, 10)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabelParticipantName, javax.swing.GroupLayout.PREFERRED_SIZE, 425, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(257, 257, 257))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabelParticipantName, javax.swing.GroupLayout.PREFERRED_SIZE, 425, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(257, 257, 257))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnViewComparisonPair)
-                                .addGap(10, 10, 10)
-                                .addComponent(btnBack)))
-                        .addContainerGap(462, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel4))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnSaveNotes)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel3)
+                                        .addComponent(jLabel2))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                         .addComponent(radioGazePlot, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(radioHeatmap, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                            .addComponent(selectedImage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGap(8, 8, 8)))
-                                    .addComponent(btnLoadImage))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(imageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 442, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10))))
+                                            .addComponent(selectedPair, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGap(8, 8, 8))))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jLabel4)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(btnLoadImage, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(imageLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(imageLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 442, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBack, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(10, 10, 10)
                 .addComponent(jLabelParticipantName)
-                .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(selectedImage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(16, 16, 16)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(radioGazePlot))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(radioHeatmap)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnLoadImage)
-                            .addComponent(jLabel4))
-                        .addGap(20, 20, 20)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(10, 10, 10)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel2)
+                                    .addComponent(selectedPair, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(16, 16, 16)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel3)
+                                    .addComponent(radioGazePlot))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(radioHeatmap)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(btnLoadImage)
+                                    .addComponent(jLabel4))
+                                .addGap(10, 10, 10)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(0, 8, Short.MAX_VALUE)
+                                .addComponent(imageLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 8, Short.MAX_VALUE)
-                        .addComponent(imageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(imageLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnBack)
-                    .addComponent(btnViewComparisonPair))
+                    .addComponent(btnSaveNotes))
                 .addGap(10, 10, 10))
         );
 
@@ -256,24 +302,117 @@ public class ParticipantDataGUI extends javax.swing.JFrame {
 
     private void btnLoadImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoadImageActionPerformed
         
-        String constructedPath = this.selectedImagePath;
+        try {
+            readPairNotesFromFile();
+        } catch (Exception ex) {
+            Logger.getLogger(ParticipantDataGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
-        constructedPath += this.getParticipant().getName() + "/" + this.selectedImage.getSelectedItem().toString() + "/" + Integer.toString(this.selectedVisualisationMode) + "/" + "img.png";
+        this.pair = (this.selectedPair.getSelectedIndex()+1);
+        String pairSelection = this.selectedPair.getSelectedItem().toString();
+        String pairSelectionForPath = "";
+        String image1Designation = "";
+        String image2Designation = "";
         
-        this.imageIcon = new ImageIcon(constructedPath);
+        switch(pairSelection){
+            case "Pair 1" : 
+                pairSelectionForPath = "Pair 1";
+                image1Designation = "1A";
+                image2Designation = "2B";
+                break;
+            case "Pair 2" : 
+                pairSelectionForPath = "Pair 2";
+                image1Designation = "1A";
+                image2Designation = "2A";
+                break;
+            case "Pair 3" : 
+                pairSelectionForPath = "Pair 3";
+                image1Designation = "1A";
+                image2Designation = "2C";
+                break;
+            case "Pair 4" : 
+                pairSelectionForPath = "Pair 4";
+                image1Designation = "1A";
+                image2Designation = "2E";
+                break;
+            case "Pair 5" : 
+                pairSelectionForPath = "Pair 5";
+                image1Designation = "1B";
+                image2Designation = "3F";
+                break;
+            case "Pair 6" : 
+                pairSelectionForPath = "Pair 6";
+                image1Designation = "1B";
+                image2Designation = "3A";
+                break;
+            case "Pair 7" : 
+                pairSelectionForPath = "Pair 7";
+                image1Designation = "1B";
+                image2Designation = "3D";
+                break;
+            case "Pair 8" : 
+                pairSelectionForPath = "Pair 8";
+                image1Designation = "1B";
+                image2Designation = "3B";
+                break;
+            case "Pair 9" : 
+                pairSelectionForPath = "Pair 9";
+                image1Designation = "1C";
+                image2Designation = "4F";
+                break;
+            case "Pair 10" : 
+                pairSelectionForPath = "Pair 10";
+                image1Designation = "1C";
+                image2Designation = "4D";
+                break;
+            case "Pair 11" : 
+                pairSelectionForPath = "Pair 11";
+                image1Designation = "1C";
+                image2Designation = "4E";
+                break;
+            case "Pair 12" : 
+                pairSelectionForPath = "Pair 12";
+                image1Designation = "1C";
+                image2Designation = "4C";
+                break;
+        default :
+            pairSelectionForPath = "Pair 1";
+            image1Designation = "";
+            image2Designation = "";
+            break;
+        }
         
-        this.imageLabel.setIcon(resize(imageIcon,442,331));
-
+        String constructedPath1 = this.pathRoot;
+        String constructedPath2 = this.pathRoot;
         
+        constructedPath1 += this.getParticipant().getName() + "/" + pairSelectionForPath + "/" + image1Designation + "/" + Integer.toString(this.selectedVisualisationMode) + "/" + "img.png";
+        constructedPath2 += this.getParticipant().getName() + "/" + pairSelectionForPath + "/" + image2Designation + "/" + Integer.toString(this.selectedVisualisationMode) + "/" + "img.png";
+        
+        this.image1 = new ImageIcon(constructedPath1);
+        this.image2 = new ImageIcon(constructedPath2);
+        
+        this.imageLabel1.setIcon(resize(image1,442,331));
+        this.imageLabel2.setIcon(resize(image2,442,331));
+        
+        try {
+            this.imagePairAnnotationField.setText(readPairNotesFromFile());
+        } catch (Exception ex) {
+            Logger.getLogger(ParticipantDataGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnLoadImageActionPerformed
 
-    private void selectedImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectedImageActionPerformed
+    private void selectedPairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectedPairActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_selectedImageActionPerformed
+    }//GEN-LAST:event_selectedPairActionPerformed
 
-    private void btnViewComparisonPairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewComparisonPairActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnViewComparisonPairActionPerformed
+    private void btnSaveNotesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveNotesActionPerformed
+        
+        try {
+            writePairNotesToFile();
+        } catch (Exception ex) {
+            Logger.getLogger(ParticipantDataGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }    
+    }//GEN-LAST:event_btnSaveNotesActionPerformed
 
     /**
      * @param args the command line arguments
@@ -306,7 +445,11 @@ public class ParticipantDataGUI extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ParticipantDataGUI(participant).setVisible(true);
+                try {
+                    new ParticipantDataGUI(participant).setVisible(true);
+                } catch (Exception ex) {
+                    Logger.getLogger(ParticipantDataGUI.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
@@ -314,18 +457,19 @@ public class ParticipantDataGUI extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;
     private javax.swing.JButton btnLoadImage;
-    private javax.swing.JButton btnViewComparisonPair;
+    private javax.swing.JButton btnSaveNotes;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
-    private javax.swing.JLabel imageLabel;
+    private javax.swing.JLabel imageLabel1;
+    private javax.swing.JLabel imageLabel2;
+    private javax.swing.JTextArea imagePairAnnotationField;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabelParticipantName;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JRadioButton radioGazePlot;
     private javax.swing.JRadioButton radioHeatmap;
-    private javax.swing.JComboBox<String> selectedImage;
+    private javax.swing.JComboBox<String> selectedPair;
     // End of variables declaration//GEN-END:variables
 }

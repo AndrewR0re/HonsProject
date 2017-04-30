@@ -16,6 +16,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -45,18 +47,16 @@ public class ParticipantGUI extends javax.swing.JFrame {
         initialiseParticipants();
         this.updateInfoHeader();
         verifyDbAccess();
-        
+
     }
-    
-    public static void verifyDbAccess(){
-        
-        if(ParticipantDataGUI.dbUnlocked){
-            
+
+    public static void verifyDbAccess() {
+
+        if (ParticipantDataGUI.dbUnlocked) {
+
             liftDbRestriction();
             updateTable();
-        }
-        
-        else{  
+        } else {
         }
     }
 
@@ -191,33 +191,33 @@ public class ParticipantGUI extends javax.swing.JFrame {
 
         return participantArrayList;
     }
-    
-    public Participant resolveParticipantFromName(String name){
-        
+
+    public Participant resolveParticipantFromName(String name) {
+
         ArrayList<Participant> participantArrayList = new ArrayList<>();
-        
-        participantArrayList = getParticipantArrayList(); 
-        
+
+        participantArrayList = getParticipantArrayList();
+
         Participant resultParticipant = null;
-        
-        for(Participant p : participantArrayList){
-            if(p.getName().equals(name)){
+
+        for (Participant p : participantArrayList) {
+            if (p.getName().equals(name)) {
                 resultParticipant = p;
             }
         }
         return resultParticipant;
     }
-    
-    public Participant resolveParticipantFromRowIndex(int index){
-        
+
+    public Participant resolveParticipantFromRowIndex(int index) {
+
         ArrayList<Participant> participantArrayList = new ArrayList<>();
-        
-        participantArrayList = getParticipantArrayList(); 
-        
+
+        participantArrayList = getParticipantArrayList();
+
         Participant resultParticipant = null;
-        
+
         resultParticipant = participantArrayList.get(index);
-        
+
         return resultParticipant;
     }
 
@@ -465,53 +465,49 @@ public class ParticipantGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAddParticipantActionPerformed
 
     private void btnViewDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewDataActionPerformed
-        
+
         int selectedRow = this.participantDetailTable.getSelectedRow();
-        
-        if(allowedDeeperAccess && selectedRow != -1){
-            
-            Participant selectedParticipant = resolveParticipantFromRowIndex(selectedRow);
-        
-            ParticipantDataGUI selectedData = new ParticipantDataGUI(selectedParticipant);
-            selectedData.setLocationRelativeTo(this);
-            selectedData.setVisible(true);
-            this.dispose();
-        }
-        
-        else if (allowedDeeperAccess && selectedRow == -1){
-            JOptionPane.showMessageDialog(this, "Please select a Participant." , "Please select a Participant", JOptionPane.INFORMATION_MESSAGE);
-        }
-        
-        else{
+
+        if (allowedDeeperAccess && selectedRow != -1) {
+            try {
+                Participant selectedParticipant = resolveParticipantFromRowIndex(selectedRow);
+
+                ParticipantDataGUI selectedData = new ParticipantDataGUI(selectedParticipant);
+                selectedData.setLocationRelativeTo(this);
+                selectedData.setVisible(true);
+                this.dispose();
+            } catch (Exception ex) {
+                Logger.getLogger(ParticipantGUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else if (allowedDeeperAccess && selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Please select a Participant.", "Please select a Participant", JOptionPane.INFORMATION_MESSAGE);
+        } else {
             JOptionPane.showMessageDialog(this, "Access to Database Retricted." + "\n" + "Load Database to Lift Restrictions.", "Error!", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnViewDataActionPerformed
 
     private void btnLoadDatabaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoadDatabaseActionPerformed
-        
-        if(!allowedDeeperAccess){
+
+        if (!allowedDeeperAccess) {
             DbPasswordCheck passwordCheck = new DbPasswordCheck();
 
             passwordCheck.setLocationRelativeTo(this);
             passwordCheck.setVisible(true);
-        }
-        
-        else{
+        } else {
             JOptionPane.showMessageDialog(this, "Database already loaded.", "For your information", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_btnLoadDatabaseActionPerformed
 
     private void btnSecureDatabaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSecureDatabaseActionPerformed
-        
-        if (allowedDeeperAccess){
-            
+
+        if (allowedDeeperAccess) {
+
             model.setRowCount(0);
             engageDbRestriction();
-            
-        } 
-        else {
 
-            JOptionPane.showMessageDialog(this, "Database is Secured.","For Your Information.", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+
+            JOptionPane.showMessageDialog(this, "Database is Secured.", "For Your Information.", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_btnSecureDatabaseActionPerformed
 
