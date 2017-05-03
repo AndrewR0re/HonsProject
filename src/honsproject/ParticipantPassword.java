@@ -13,7 +13,7 @@ package honsproject;
 public class ParticipantPassword {
     
     //password objects represented as array of chars as more secure than Strings
-    private char[] pass = new char[]{'p','a','s','s','w','o','r','d'};
+    private char[] pass = new char[]{'P','a','l','l','a','d','i','u','m','1'};
 
     public ParticipantPassword() {
     }

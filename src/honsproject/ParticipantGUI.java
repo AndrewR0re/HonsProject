@@ -440,14 +440,16 @@ public class ParticipantGUI extends javax.swing.JFrame {
                         Statement insertStatement = con.createStatement();
                         rowCount++;
 
-                        int c = insertStatement.executeUpdate("INSERT INTO PARTICIPANTDETAILS (ID, FIRST_NAME, LAST_NAME, EMAIL) VALUES (" + rowCount + ",'" + newParticipantFirstName + "','" + newParticipantSecondName + "','" + newParticipantEmail + "')");
+                        int c = insertStatement.executeUpdate("INSERT INTO PARTICIPANTDETAILS (ID, FIRST_NAME, LAST_NAME, EMAIL) VALUES (" + 
+                            rowCount + ",'" + newParticipantFirstName + "','" + newParticipantSecondName + "','" + newParticipantEmail + "')");
 
                         insertStatement.close();
                         con.close();
 
                         updateTable();
 
-                        participantArray.add(new Participant(Integer.toString(countParticipants()), newParticipantFirstName + " " + newParticipantSecondName, newParticipantEmail));
+                        participantArray.add(new Participant(Integer.toString(countParticipants()), newParticipantFirstName + " " +
+                                newParticipantSecondName, newParticipantEmail));
 
                         initialiseParticipants();
                     } catch (SQLException err) {

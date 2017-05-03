@@ -13,14 +13,10 @@ package honsproject;
  * software by creating an instance of the first GUI element. 
  */
 public class JTrack {
-
+    
     /**
      * @param args the command line arguments
      */
-    
-    public static void conect(){
-
-    }
     public static void main(String[] args){
         
         try {
